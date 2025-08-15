@@ -37,6 +37,12 @@ export const defaultMenuItems: MenuItem[] = [
     href: "/statistics",
     icon: null,
   },
+  {
+    id: "admin",
+    label: "admin",
+    href: "/admin",
+    icon: null,
+  },
 ];
 
 // 管理后台菜单配置

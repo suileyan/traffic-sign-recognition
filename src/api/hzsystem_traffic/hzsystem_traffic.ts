@@ -1,5 +1,4 @@
 import type {
-  // 响应类型
   DatasetResponse,
   TrafficCategoryListResponse,
   TrafficCategoryResponse,
@@ -13,8 +12,8 @@ import type {
   TrafficUserResponse,
   UserStatisticsListResponse,
   UserStatisticsResponse,
+  StatisticsOverviewResponse,
   ApiResponse,
-  // 请求类型
   CreateTrafficCategoryRequest,
   UpdateTrafficCategoryRequest,
   TrafficCategoryQueryParams,
@@ -374,5 +373,15 @@ export function deleteUserStatisticsAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/user-statistics/${id}/`,
     method: 'delete'
+  })
+}
+
+/**
+ * 获取系统统计概览
+ */
+export function getStatisticsOverviewAPI(): Promise<StatisticsOverviewResponse> {
+  return serviceAxios({
+    url: '/api/traffic/statistics/overview/',
+    method: 'get'
   })
 }

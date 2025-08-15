@@ -167,6 +167,7 @@ export interface UpdateDetectionRecordRequest {
   status?: RecordStatus
   confidence?: number
   processing_time?: number
+  user_feedback?: string
 }
 
 export interface DetectionRecordQueryParams {
@@ -302,3 +303,37 @@ export type TrafficUserListResponse = ApiResponse<PaginatedResponse<TrafficUser>
 export type TrafficUserResponse = ApiResponse<TrafficUser>
 export type UserStatisticsListResponse = ApiResponse<UserStatistics[]>
 export type UserStatisticsResponse = ApiResponse<UserStatistics>
+
+// 统计概览相关类型
+export interface StatisticsOverview {
+  total_users: number
+  total_detections: number
+  avg_accuracy: number
+  total_processing_time: number
+  most_detected_sign: {
+    id: number
+    name: string
+    count: number
+  }
+  daily_detections: Array<{
+    date: string
+    count: number
+  }>
+  category_distribution: Array<{
+    category_name: string
+    count: number
+    percentage: number
+  }>
+  accuracy_trends: Array<{
+    date: string
+    accuracy: number
+  }>
+  top_users: Array<{
+    id: number
+    username: string
+    total_detections: number
+    accuracy_rate: number
+  }>
+}
+
+export type StatisticsOverviewResponse = ApiResponse<StatisticsOverview>
