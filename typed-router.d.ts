@@ -32,6 +32,7 @@ declare module 'vue-router/auto-routes' {
     '/knowledge/': RouteRecordInfo<'/knowledge/', '/knowledge', Record<never, never>, Record<never, never>>,
     '/motion-demo': RouteRecordInfo<'/motion-demo', '/motion-demo', Record<never, never>, Record<never, never>>,
     '/record/': RouteRecordInfo<'/record/', '/record', Record<never, never>, Record<never, never>>,
+    '/statistics/': RouteRecordInfo<'/statistics/', '/statistics', Record<never, never>, Record<never, never>>,
     '/userInfo/': RouteRecordInfo<'/userInfo/', '/userInfo', Record<never, never>, Record<never, never>>,
   }
 
@@ -100,6 +101,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/record/index.vue': {
       routes: '/record/'
+      views: never
+    }
+    'src/pages/statistics/index.vue': {
+      routes: '/statistics/'
       views: never
     }
     'src/pages/userInfo/index.vue': {
