@@ -7,15 +7,30 @@
     </div>
     <h2 class="text-3xl font-bold text-gray-800 mb-4">图片检测</h2>
     <p class="text-gray-600 mb-8">上传本地图片进行交通标志识别，支持JPG、PNG等多种格式</p>
-    
+    <!-- 检测结果区 -->
+    <div v-if="result" class="mb-6">
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mx-auto max-w-md">
+        <img :src="result.image_url" alt="检测结果" class="w-full rounded mb-4" v-if="result.image_url" />
+        <div class="text-left">
+          <div class="font-bold text-lg text-gray-800 mb-2">识别结果</div>
+          <div v-if="result.detections && result.detections.length">
+            <div v-for="(item, idx) in result.detections" :key="idx" class="mb-2 p-2 bg-blue-50 rounded">
+              <span class="text-blue-700 font-semibold">{{ item.label }}</span>
+              <span class="ml-2 text-gray-600">置信度: {{ (item.confidence * 100).toFixed(1) }}%</span>
+            </div>
+          </div>
+          <div v-else class="text-gray-500">未检测到交通标志</div>
+        </div>
+        <button @click="reset" class="mt-4 px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50">重新上传</button>
+      </div>
+    </div>
     <!-- 图片上传区域 -->
-    <div class="mb-6">
+    <div class="mb-6" v-else>
       <ReceiveFiles 
         model="image" 
         @file-selected="handleFileSelected"
       />
     </div>
-    
     <!-- 功能特点 -->
     <div class="grid grid-cols-2 gap-4 text-sm">
       <div class="flex items-center justify-center p-3 bg-blue-50 rounded-lg">
@@ -37,11 +52,29 @@
 <script setup>
 import { ref } from 'vue'
 import ReceiveFiles from '@/components/ReceiveFiles.vue'
+import { detectImageAPI } from '@/api/yolo/yoloApi'
 
-// 处理文件选择
-const handleFileSelected = (file) => {
-  console.log('选择的图片文件:', file)
-  // 这里可以添加图片处理逻辑
+const result = ref(null)
+const loading = ref(false)
+
+const handleFileSelected = async (file) => {
+  loading.value = true
+  try {
+    const res = await detectImageAPI({ image: file })
+    if (res && res.code === 200 && res.data) {
+      result.value = res.data
+    } else {
+      result.value = { detections: [], image_url: '' }
+    }
+  } catch (e) {
+    result.value = { detections: [], image_url: '' }
+  } finally {
+    loading.value = false
+  }
+}
+
+const reset = () => {
+  result.value = null
 }
 </script>
 
