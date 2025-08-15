@@ -13,6 +13,8 @@ import type {
   TrafficUserResponse,
   UserStatisticsListResponse,
   UserStatisticsResponse,
+  SystemStatisticsOverviewResponse,
+  UserDetailedStatisticsResponse,
   ApiResponse,
   // 请求类型
   CreateTrafficCategoryRequest,
@@ -107,12 +109,14 @@ export function deleteTrafficCategoryAPI(id: number): Promise<ApiResponse> {
 /**
  * 获取交通标志列表
  */
-export function getTrafficSignsAPI(params?: TrafficSignQueryParams): Promise<TrafficSignListResponse> {
+export function getTrafficSignsAPI(
+  params?: TrafficSignQueryParams
+): Promise<ApiResponse<TrafficSignListResponse>> {
   return serviceAxios({
-    url: '/api/traffic/signs/',
-    method: 'get',
-    params
-  })
+    url: "/api/traffic/signs/",
+    method: "get",
+    params,
+  });
 }
 
 /**
@@ -374,5 +378,27 @@ export function deleteUserStatisticsAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/user-statistics/${id}/`,
     method: 'delete'
+  })
+}
+
+// ==================== 1.8 统计接口 ====================
+
+/**
+ * 获取系统统计概览
+ */
+export function getSystemStatisticsOverviewAPI(): Promise<SystemStatisticsOverviewResponse> {
+  return serviceAxios({
+    url: '/api/traffic/statistics/overview/',
+    method: 'get'
+  })
+}
+
+/**
+ * 获取指定用户的详细统计信息
+ */
+export function getUserDetailedStatisticsAPI(userId: number): Promise<UserDetailedStatisticsResponse> {
+  return serviceAxios({
+    url: `/api/traffic/statistics/user/${userId}/`,
+    method: 'get'
   })
 }

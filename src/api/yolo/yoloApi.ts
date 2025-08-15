@@ -1,5 +1,4 @@
 import type {
-  BaseResponse,
   ImageDetectionRequest,
   ImageDetectionResponse,
   VideoDetectionRequest,
@@ -15,9 +14,9 @@ import type {
   ModelHealthResponse,
   GetYoloModelsParams,
   GetYoloTasksParams,
-  GetYoloStatisticsParams
-} from '@/types/apis/yolo_T'
-import serviceAxios from '@/http'
+  GetYoloStatisticsParams,
+} from "@/types/apis/yolo_T";
+import serviceAxios from "@/http";
 
 // ==================== 检测接口 ====================
 
@@ -216,12 +215,14 @@ export function deleteYoloTaskAPI(id: number): Promise<void> {
  * @param params 查询参数
  * @returns Promise<YoloDetectionStatisticsResponse>
  */
-export function getYoloStatisticsAPI(params?: GetYoloStatisticsParams): Promise<YoloDetectionStatisticsResponse> {
+export function getYoloStatisticsAPI(
+  params?: GetYoloStatisticsParams
+): Promise<YoloDetectionStatisticsResponse> {
   return serviceAxios({
-    url: '/api/yolo/statistics/',
-    method: 'get',
-    params
-  })
+    url: "/api/yolo/statistics/",
+    method: "get",
+    params,
+  });
 }
 
 // ==================== 模型健康检查接口 ====================
@@ -232,9 +233,9 @@ export function getYoloStatisticsAPI(params?: GetYoloStatisticsParams): Promise<
  */
 export function getYoloHealthAPI(): Promise<YoloHealthResponse> {
   return serviceAxios({
-    url: '/api/yolo/health/',
-    method: 'get'
-  })
+    url: "/api/yolo/health/",
+    method: "get",
+  });
 }
 
 /**
@@ -242,11 +243,13 @@ export function getYoloHealthAPI(): Promise<YoloHealthResponse> {
  * @param id 模型ID
  * @returns Promise<ModelHealthResponse>
  */
-export function getYoloModelHealthAPI(id: number): Promise<ModelHealthResponse> {
+export function getYoloModelHealthAPI(
+  id: number
+): Promise<ModelHealthResponse> {
   return serviceAxios({
     url: `/api/yolo/health/models/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 // ==================== 导出所有API函数 ====================
@@ -255,23 +258,23 @@ export default {
   // 检测接口
   detectImage: detectImageAPI,
   detectVideo: detectVideoAPI,
-  
+
   // 模型管理接口
   getModels: getYoloModelsAPI,
   getModel: getYoloModelAPI,
   createModel: createYoloModelAPI,
   updateModel: updateYoloModelAPI,
   deleteModel: deleteYoloModelAPI,
-  
+
   // 任务管理接口
   getTasks: getYoloTasksAPI,
   getTask: getYoloTaskAPI,
   deleteTask: deleteYoloTaskAPI,
-  
+
   // 统计接口
   getStatistics: getYoloStatisticsAPI,
-  
+
   // 健康检查接口
   getHealth: getYoloHealthAPI,
-  getModelHealth: getYoloModelHealthAPI
-}
+  getModelHealth: getYoloModelHealthAPI,
+};

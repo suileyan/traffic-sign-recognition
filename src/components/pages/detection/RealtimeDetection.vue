@@ -69,16 +69,18 @@
       </div>
     </div>
 
-    <!-- 检测进度显示 -->
-    <div v-if="isDetecting" class="mb-4 p-4 bg-blue-50 rounded-lg">
+    <!-- 实时检测状态显示 -->
+    <div v-if="isRealTimeDetecting" class="mb-4 p-4 bg-blue-50 rounded-lg">
       <div class="text-center mb-2">
-        <span class="text-sm font-medium text-blue-700">{{ detectionStatus }}</span>
+        <span class="text-sm font-medium text-blue-700">实时检测进行中</span>
       </div>
-      <div class="w-full bg-blue-200 rounded-full h-2">
-        <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" :style="{ width: detectionProgress + '%' }"></div>
+      <div class="flex items-center justify-center">
+        <div class="animate-pulse w-2 h-2 bg-blue-500 rounded-full mr-1"></div>
+        <div class="animate-pulse w-2 h-2 bg-blue-500 rounded-full mr-1" style="animation-delay: 0.2s"></div>
+        <div class="animate-pulse w-2 h-2 bg-blue-500 rounded-full" style="animation-delay: 0.4s"></div>
       </div>
-      <div class="text-center mt-1">
-        <span class="text-xs text-blue-600">{{ detectionProgress }}%</span>
+      <div class="text-center mt-2">
+        <span class="text-xs text-blue-600">已处理帧数: {{ frameCount }}</span>
       </div>
     </div>
 
@@ -112,12 +114,20 @@
       </button>
       
       <button 
-        v-if="isStreaming"
-        @click="captureFrame"
-        :disabled="!isWSConnected || isDetecting"
+        v-if="isStreaming && !isRealTimeDetecting"
+        @click="startRealTimeDetection"
+        :disabled="!isWSConnected"
         class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {{ isDetecting ? '检测中...' : '拍照检测' }}
+        开始实时检测
+      </button>
+      
+      <button 
+        v-if="isStreaming && isRealTimeDetecting"
+        @click="stopRealTimeDetection"
+        class="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+      >
+        停止实时检测
       </button>
       
       <button 
@@ -137,14 +147,6 @@
        </button>
        
        <button 
-         v-if="isDetecting"
-         @click="cancelDetection"
-         class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-       >
-         取消检测
-       </button>
-       
-       <button 
          v-if="detectionResults.length > 0 || detectionError"
          @click="clearResults"
          class="px-6 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-colors"
@@ -154,21 +156,77 @@
      </div>
 
     <!-- 检测结果显示 -->
-    <div v-if="detectionResults.length > 0" class="mb-6 p-4 bg-green-50 rounded-lg">
-      <h3 class="text-lg font-semibold text-green-800 mb-3">检测结果</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div 
-          v-for="(result, index) in detectionResults" 
-          :key="index"
-          class="p-3 bg-white rounded border border-green-200"
-        >
-          <div class="flex justify-between items-center mb-2">
-            <span class="font-medium text-gray-800">{{ result.class_name }}</span>
-            <span class="text-sm text-green-600">{{ Math.round(result.confidence * 100) }}%</span>
+    <div v-if="detectionResults.length > 0 || detectionSuccessResults.length > 0" class="mb-6">
+      <!-- 实时检测结果 -->
+      <div v-if="detectionResults.length > 0" class="mb-4 p-4 bg-green-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-green-800 mb-3">实时检测结果</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div 
+            v-for="(result, index) in detectionResults" 
+            :key="index"
+            class="p-4 bg-white rounded-lg border border-green-200 shadow-sm"
+          >
+            <div class="flex justify-between items-center mb-3">
+              <span class="font-semibold text-gray-800">{{ result.sign_name || result.class_name }}</span>
+              <span class="text-sm font-medium text-green-600 bg-green-100 px-2 py-1 rounded">{{ Math.round(result.confidence * 100) }}%</span>
+            </div>
+            
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-600">类别:</span>
+                <span class="text-gray-800 font-medium">{{ result.category || '未知' }}</span>
+              </div>
+              
+              <div class="flex justify-between">
+                <span class="text-gray-600">类别ID:</span>
+                <span class="text-gray-800">{{ result.class_id }}</span>
+              </div>
+              
+              <div class="border-t pt-2">
+                <div class="text-gray-600 mb-1">边界框坐标:</div>
+                <div class="text-xs text-gray-700 bg-gray-50 p-2 rounded">
+                  X: {{ Math.round(result.bbox[0]) }}, Y: {{ Math.round(result.bbox[1]) }}<br>
+                  宽: {{ Math.round(result.bbox[2]) }}, 高: {{ Math.round(result.bbox[3]) }}
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="text-xs text-gray-600">
-            位置: ({{ Math.round(result.bbox[0]) }}, {{ Math.round(result.bbox[1]) }}) - 
-            ({{ Math.round(result.bbox[2]) }}, {{ Math.round(result.bbox[3]) }})
+        </div>
+      </div>
+      
+      <!-- 检测成功结果 -->
+      <div v-if="detectionSuccessResults.length > 0" class="mb-4 p-4 bg-blue-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-blue-800 mb-3">检测完成结果</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div 
+            v-for="(result, index) in detectionSuccessResults" 
+            :key="'success-' + index"
+            class="p-4 bg-white rounded-lg border border-blue-200 shadow-sm"
+          >
+            <div class="flex justify-between items-center mb-3">
+              <span class="font-semibold text-gray-800">{{ result.sign_name || result.class_name }}</span>
+              <span class="text-sm font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded">{{ Math.round(result.confidence * 100) }}%</span>
+            </div>
+            
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-600">类别:</span>
+                <span class="text-gray-800 font-medium">{{ result.category || '未知' }}</span>
+              </div>
+              
+              <div class="flex justify-between">
+                <span class="text-gray-600">类别ID:</span>
+                <span class="text-gray-800">{{ result.class_id }}</span>
+              </div>
+              
+              <div class="border-t pt-2">
+                <div class="text-gray-600 mb-1">边界框坐标:</div>
+                <div class="text-xs text-gray-700 bg-gray-50 p-2 rounded">
+                  X: {{ Math.round(result.bbox[0]) }}, Y: {{ Math.round(result.bbox[1]) }}<br>
+                  宽: {{ Math.round(result.bbox[2]) }}, 高: {{ Math.round(result.bbox[3]) }}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -188,27 +246,27 @@
         </svg>
         0.1s延迟
       </div>
-    </div>
-  </div>
-</template>
+     </div>
+   </div>
+ </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { uploadFile } from '@/api/common/file'
-import serverConfig from '@/configs'
 import { 
-  createWebSocketAPI, 
-  type HzSystemWebSocketAPI,
-  type WebSocketEventHandlers,
-  type DetectionStartData,
-  type DetectionProgressData,
-  type DetectionCompleteData,
-  type DetectionErrorData,
-  type DetectionResult,
-  type CancelDetectionPayload,
-  type StartDetectionPayload
-} from '@/api/hzsystem_websocket/hzsystem_websocket'
+  getTrafficDetectionWebSocket,
+  destroyTrafficDetectionWebSocket,
+  type TrafficDetectionWebSocket
+} from '@/api/yolo_websocket'
+import type {
+  Detection,
+  DetectionSuccess,
+  DetectionResultMessage,
+  DetectionSuccessMessage,
+  ErrorMessage,
+  ConnectionEstablishedMessage,
+  WebSocketStatus
+} from '@/types/apis/yolo_websocket_T'
 
 // 响应式变量
 const videoElement = ref<HTMLVideoElement | null>(null)
@@ -220,60 +278,85 @@ const selectedDeviceId = ref('')
 const currentStream = ref<MediaStream | null>(null)
 
 // WebSocket 相关变量
-const wsAPI = ref<HzSystemWebSocketAPI | null>(null)
+const wsClient = ref<TrafficDetectionWebSocket | null>(null)
 const isWSConnected = ref(false)
-const isDetecting = ref(false)
-const detectionProgress = ref(0)
-const detectionStatus = ref('')
-const detectionResults = ref<DetectionResult[]>([])
-const currentTaskId = ref('')
+const wsStatus = ref<WebSocketStatus>('disconnected')
+const sessionId = ref('')
+const detectionResults = ref<Detection[]>([])
+const detectionSuccessResults = ref<DetectionSuccess[]>([])
 const detectionError = ref('')
+const frameCount = ref(0)
+const receivedMessages = ref<any[]>([]) // 存储所有收到的消息
+
+// 实时检测相关变量
+const isRealTimeDetecting = ref(false)
+const detectionTimer = ref<number | null>(null)
+const DETECTION_INTERVAL = 500 // 每500ms发送一次，即每秒2次
 
 // WebSocket 连接管理
 const connectWebSocket = async () => {
   try {
-    const eventHandlers: WebSocketEventHandlers = {
-      onOpen: () => {
-        isWSConnected.value = true
-        ElMessage.success('WebSocket 连接成功')
+    // 创建WebSocket客户端
+    wsClient.value = getTrafficDetectionWebSocket()
+    
+    // 设置事件监听器
+    wsClient.value.setEventListeners({
+      onStatusChange: (status: WebSocketStatus) => {
+        wsStatus.value = status
+        isWSConnected.value = status === 'connected'
+        const message = { type: 'status_change', status, timestamp: new Date().toISOString() }
+        receivedMessages.value.push(message)
+        console.log('=== WebSocket消息 ===', message)
+        
+        if (status === 'connected') {
+          ElMessage.success('WebSocket 连接成功')
+        } else if (status === 'disconnected') {
+          const logMessage = { type: 'disconnect', timestamp: new Date().toISOString() }
+          receivedMessages.value.push(logMessage)
+          console.log('=== WebSocket消息 ===', logMessage)
+          // 移除频繁的断开连接提示
+          stopRealTimeDetection() // 断开连接时停止实时检测
+        } else if (status === 'error') {
+          ElMessage.error('WebSocket 连接错误')
+          stopRealTimeDetection()
+        }
+       },
+        onConnectionEstablished: (data: ConnectionEstablishedMessage) => {
+        sessionId.value = data.session_id
+        const logMessage = { type: 'connection_established', data, timestamp: new Date().toISOString() }
+        receivedMessages.value.push(logMessage)
+        console.log('=== WebSocket消息 ===', logMessage)
       },
-      onClose: () => {
-        isWSConnected.value = false
-        ElMessage.info('WebSocket 连接已断开')
+      onDetectionResult: (data: DetectionResultMessage) => {
+        detectionResults.value = data.detections
+        frameCount.value = data.frame_count
+        detectionError.value = '' // 清除错误信息
+        const logMessage = { type: 'detection_result', data, timestamp: new Date().toISOString() }
+        receivedMessages.value.push(logMessage)
+        console.log('=== WebSocket消息 ===', logMessage)
+        // 移除频繁的检测结果提示
       },
-      onDetectionStart: (data: DetectionStartData) => {
-        currentTaskId.value = data.task_id
-        isDetecting.value = true
-        detectionProgress.value = 0
-        detectionStatus.value = '检测开始'
-        detectionError.value = ''
-        ElMessage.info('开始检测...')
+      onDetectionSuccess: (data: DetectionSuccessMessage) => {
+        detectionSuccessResults.value = data.detections
+        const logMessage = { type: 'detection_success', data, timestamp: new Date().toISOString() }
+        receivedMessages.value.push(logMessage)
+        console.log('=== WebSocket消息 ===', logMessage)
+        // 保留重要的检测成功提示，但减少频率
+        if (data.detections.length > 0) {
+          ElMessage.success(`检测成功！发现 ${data.detections.length} 个交通标志`)
+        }
       },
-      onDetectionProgress: (data: DetectionProgressData) => {
-        detectionProgress.value = data.progress
-        detectionStatus.value = data.current_step
-      },
-      onDetectionComplete: (data: DetectionCompleteData) => {
-        isDetecting.value = false
-        detectionProgress.value = 100
-        detectionStatus.value = '检测完成'
-        detectionResults.value = data.results?.detections || []
-        ElMessage.success(`检测完成！发现 ${data.results?.total_detections || 0} 个交通标志`)
-      },
-      onDetectionError: (data: DetectionErrorData) => {
-        isDetecting.value = false
-        detectionError.value = data.error_message
-        detectionStatus.value = '检测失败'
-        ElMessage.error(`检测失败: ${data.error_message}`)
-      },
-      onRawError: (event) => {
-        console.error('WebSocket 错误:', event)
-        ElMessage.error('WebSocket 连接错误')
+      onError: (error: ErrorMessage) => {
+        detectionError.value = error.message
+        const logMessage = { type: 'error', data: error, timestamp: new Date().toISOString() }
+        receivedMessages.value.push(logMessage)
+        console.log('=== WebSocket消息 ===', logMessage)
+        ElMessage.error(`检测错误: ${error.message}`)
       }
-    }
-
-    wsAPI.value = createWebSocketAPI(undefined, eventHandlers)
-    await wsAPI.value.connect()
+    })
+    
+    // 连接WebSocket
+    await wsClient.value.connect()
   } catch (error) {
     console.error('WebSocket 连接失败:', error)
     ElMessage.error('WebSocket 连接失败')
@@ -281,46 +364,113 @@ const connectWebSocket = async () => {
 }
 
 const disconnectWebSocket = () => {
-  if (wsAPI.value) {
-    wsAPI.value.disconnect()
-    wsAPI.value = null
+  stopRealTimeDetection() // 先停止实时检测
+  
+  if (wsClient.value) {
+    wsClient.value.disconnect()
+    wsClient.value = null
     isWSConnected.value = false
+    wsStatus.value = 'disconnected'
   }
 }
 
-// 取消检测
-const cancelDetection = async () => {
-  if (!wsAPI.value || !currentTaskId.value) {
-    ElMessage.warning('没有正在进行的检测任务')
+// 开始实时检测
+const startRealTimeDetection = () => {
+  if (!isWSConnected.value || !wsClient.value) {
+    ElMessage.warning('WebSocket未连接，请先连接')
     return
   }
+  
+  if (!isStreaming.value || !videoElement.value) {
+    ElMessage.warning('请先启动摄像头')
+    return
+  }
+  
+  if (isRealTimeDetecting.value) {
+    ElMessage.warning('实时检测已在进行中')
+    return
+  }
+  
+  isRealTimeDetecting.value = true
+  detectionError.value = ''
+  
+  // 设置定时器，每500ms发送一次视频帧
+  detectionTimer.value = setInterval(() => {
+    sendVideoFrame()
+  }, DETECTION_INTERVAL)
+  
+  ElMessage.success('开始实时检测')
+}
 
+// 停止实时检测
+const stopRealTimeDetection = () => {
+  if (detectionTimer.value) {
+    clearInterval(detectionTimer.value)
+    detectionTimer.value = null
+  }
+  
+  isRealTimeDetecting.value = false
+  
+  if (isRealTimeDetecting.value) {
+    ElMessage.info('实时检测已停止')
+  }
+}
+
+// 发送视频帧进行检测
+const sendVideoFrame = () => {
+  if (!videoElement.value || !isStreaming.value || !wsClient.value?.isConnected()) {
+    return
+  }
+  
   try {
-    const payload: CancelDetectionPayload = {
-      task_id: currentTaskId.value
+    // 创建canvas来捕获当前视频帧
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    
+    if (!context) {
+      console.error('无法创建画布上下文')
+      return
     }
     
-    await wsAPI.value.cancelDetection(payload)
+    // 设置canvas尺寸
+    canvas.width = videoElement.value.videoWidth
+    canvas.height = videoElement.value.videoHeight
     
-    // 重置状态
-    isDetecting.value = false
-    detectionProgress.value = 0
-    detectionStatus.value = '检测已取消'
-    currentTaskId.value = ''
+    // 绘制当前视频帧
+    context.drawImage(videoElement.value, 0, 0, canvas.width, canvas.height)
     
-    ElMessage.info('检测已取消')
+    // 转换为base64
+    const frameBase64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1] // 移除data:image/jpeg;base64,前缀，只保留纯base64数据   
+    // 记录发送的消息
+    const sendMessage = {
+      type: 'video_frame',
+      data: {
+        frame_size: frameBase64.length,
+        session_id: sessionId.value
+      },
+      timestamp: new Date().toISOString()
+    }
+    receivedMessages.value.push(sendMessage)
+    console.log('=== WebSocket消息 ===', sendMessage)
+    
+    // 发送到服务器
+    wsClient.value.sendVideoFrame(frameBase64)
+    
   } catch (error) {
-    console.error('取消检测失败:', error)
-    ElMessage.error('取消检测失败')
+    console.error('发送视频帧失败:', error)
   }
 }
 
 // 清除检测结果
 const clearResults = () => {
+  if (wsClient.value?.isConnected()) {
+    wsClient.value.clearResults()
+  }
+  
   detectionResults.value = []
+  detectionSuccessResults.value = []
   detectionError.value = ''
-  detectionStatus.value = ''
-  detectionProgress.value = 0
+  frameCount.value = 0
 }
 
 // 获取摄像头设备列表
@@ -394,31 +544,7 @@ const startCamera = async () => {
   }
 }
 
-// 文件上传功能
-const uploadCapturedFrame = async (canvas: HTMLCanvasElement): Promise<string | null> => {
-  try {
-    // 将canvas转换为blob
-    const blob = await new Promise<Blob>((resolve) => {
-      canvas.toBlob((blob) => {
-        resolve(blob!)
-      }, 'image/jpeg', 0.8)
-    })
 
-    // 创建文件对象
-    const timestamp = new Date().getTime()
-    const file = new File([blob], `realtime_capture_${timestamp}.jpg`, {
-      type: 'image/jpeg'
-    })
-
-    // 上传文件
-    const response = await uploadFile(file, serverConfig.FileUploadUrl)
-    return response.url || response.path || null
-  } catch (error) {
-    console.error('文件上传失败:', error)
-    ElMessage.error('图片上传失败')
-    return null
-  }
-}
 
 // 停止摄像头
 const stopCamera = () => {
@@ -447,75 +573,7 @@ const switchCamera = async () => {
   }
 }
 
-// 拍照检测
-const captureFrame = async () => {
-  if (!videoElement.value || !isStreaming.value) {
-    ElMessage.warning('请先启动摄像头')
-    return
-  }
 
-  if (!isWSConnected.value) {
-    ElMessage.warning('WebSocket未连接，请先连接')
-    return
-  }
-
-  if (isDetecting.value) {
-    ElMessage.warning('检测正在进行中，请等待完成')
-    return
-  }
-
-  try {
-    isLoading.value = true
-    statusMessage.value = '正在捕获图片...'
-
-    // 创建canvas元素
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    
-    if (!context) {
-      ElMessage.error('无法创建画布上下文')
-      return
-    }
-
-    // 设置canvas尺寸与视频相同
-    canvas.width = videoElement.value.videoWidth
-    canvas.height = videoElement.value.videoHeight
-
-    // 将当前视频帧绘制到canvas上
-    context.drawImage(videoElement.value, 0, 0, canvas.width, canvas.height)
-
-    // 上传图片到服务器
-    statusMessage.value = '正在上传图片...'
-    const imageUrl = await uploadCapturedFrame(canvas)
-    
-    if (!imageUrl) {
-      ElMessage.error('图片上传失败')
-      return
-    }
-
-    // 发送检测请求
-    statusMessage.value = '正在发送检测请求...'
-    const payload: StartDetectionPayload = {
-      file_path: imageUrl,
-      detection_type: 'image',
-      options: {
-        confidence_threshold: 0.5,
-        save_result: true
-      }
-    }
-
-    await wsAPI.value!.startDetection(payload)
-    statusMessage.value = '检测请求已发送，等待结果...'
-    ElMessage.success('图片捕获成功，开始检测！')
-    
-  } catch (error) {
-    console.error('拍照检测失败:', error)
-    ElMessage.error('拍照检测失败，请重试')
-    statusMessage.value = '检测失败'
-  } finally {
-    isLoading.value = false
-  }
-}
 
 // 组件挂载时获取设备列表并连接WebSocket
 onMounted(() => {
@@ -525,8 +583,10 @@ onMounted(() => {
 
 // 组件卸载时停止摄像头并断开WebSocket
 onUnmounted(() => {
+  stopRealTimeDetection()
   stopCamera()
   disconnectWebSocket()
+  destroyTrafficDetectionWebSocket()
 })
 </script>
 

@@ -288,17 +288,70 @@ export interface UserStatisticsQueryParams {
   min_detections?: number
 }
 
+// 检测记录列表响应类型（嵌套结构）
+export interface DetectionRecordListResponse {
+  count: number
+  next: string | null
+  previous: string | null
+  results: {
+    code: number
+    message: string
+    data: DetectionRecord[]
+  }
+}
+
+// 统计接口类型
+export interface CategoryDistribution {
+  traffic_sign__category__name: string
+  count: number
+}
+
+export interface SystemStatisticsOverview {
+  total_users: number
+  total_detections: number
+  average_accuracy: number
+  system_availability: number
+  category_distribution: CategoryDistribution[]
+}
+
+export interface UserDetailedStatistics {
+  user_info: {
+    id: number
+    username: string
+    email: string
+    date_joined: string
+  }
+  statistics: {
+    total_detections: number
+    correct_detections: number
+    accuracy_rate: number
+    total_time_spent: number
+    favorite_signs: number[]
+    monthly_detections: number
+    achievements: string[]
+    recent_records: Array<{
+      id: number
+      user_name: string
+      detection_type_display: string
+      status_display: string
+      processing_time: number
+      created_at: string
+    }>
+  }
+}
+
 // 响应类型定义
-export type DatasetResponse = ApiResponse<Dataset>
-export type TrafficCategoryListResponse = ApiResponse<TrafficCategory[]>
-export type TrafficCategoryResponse = ApiResponse<TrafficCategory>
-export type TrafficSignListResponse = ApiResponse<TrafficSign[]>
-export type TrafficSignResponse = ApiResponse<TrafficSign>
-export type DetectionRecordListResponse = ApiResponse<PaginatedResponse<DetectionRecord>>
-export type DetectionRecordResponse = ApiResponse<DetectionRecord>
-export type DetectionResultListResponse = ApiResponse<DetectionResult[]>
-export type DetectionResultResponse = ApiResponse<DetectionResult>
-export type TrafficUserListResponse = ApiResponse<PaginatedResponse<TrafficUser>>
-export type TrafficUserResponse = ApiResponse<TrafficUser>
-export type UserStatisticsListResponse = ApiResponse<UserStatistics[]>
-export type UserStatisticsResponse = ApiResponse<UserStatistics>
+export type DatasetResponse = Dataset;
+export type TrafficCategoryListResponse = TrafficCategory[];
+export type TrafficCategoryResponse = TrafficCategory;
+export type TrafficSignListResponse = TrafficSign[];
+export type TrafficSignResponse = TrafficSign;
+export type DetectionRecordResponse = DetectionRecord;
+export type DetectionResultListResponse = DetectionResult[];
+export type DetectionResultResponse = DetectionResult;
+export type TrafficUserListResponse = PaginatedResponse<TrafficUser>;
+export type TrafficUserResponse = TrafficUser;
+export type UserStatisticsListResponse = UserStatistics[];
+export type UserStatisticsResponse = UserStatistics;
+export type SystemStatisticsOverviewResponse = SystemStatisticsOverview;
+export type UserDetailedStatisticsResponse = UserDetailedStatistics;

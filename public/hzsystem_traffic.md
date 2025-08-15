@@ -1462,22 +1462,32 @@
 **响应体**:
 ```json
 {
-    "code": 200,
-    "message": "获取统计概览成功",
-    "data": {
-        "total_users": 100,
-        "active_users": 85,
-        "total_detections": 5000,
-        "successful_detections": 4750,
-        "total_signs": 50,
-        "active_signs": 45,
-        "total_categories": 3,
-        "avg_accuracy": 0.95,
-        "total_articles": 20,
-        "published_articles": 18,
-        "system_configs": 15,
-        "active_configs": 12
-    }
+	"code": 200,
+	"message": "获取成功",
+	"data": {
+		"total_users": 5,
+		"total_detections": 73,
+		"average_accuracy": 0,
+		"system_availability": 99.9,
+		"category_distribution": [
+			{
+				"traffic_sign__category__name": "警告标志",
+				"count": 25
+			},
+			{
+				"traffic_sign__category__name": "禁令标志",
+				"count": 20
+			},
+			{
+				"traffic_sign__category__name": "指示标志",
+				"count": 15
+			},
+			{
+				"traffic_sign__category__name": "指路标志",
+				"count": 13
+			}
+		]
+	}
 }
 ```
 
