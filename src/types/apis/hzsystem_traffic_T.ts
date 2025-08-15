@@ -315,29 +315,20 @@ export interface SystemStatisticsOverview {
 }
 
 export interface UserDetailedStatistics {
-  user_info: {
+  total_detections: number
+  correct_detections: number
+  accuracy_rate: number
+  weekly_detections: number
+  monthly_detections: number
+  achievements: string[]
+  recent_records: Array<{
     id: number
-    username: string
-    email: string
-    date_joined: string
-  }
-  statistics: {
-    total_detections: number
-    correct_detections: number
-    accuracy_rate: number
-    total_time_spent: number
-    favorite_signs: number[]
-    monthly_detections: number
-    achievements: string[]
-    recent_records: Array<{
-      id: number
-      user_name: string
-      detection_type_display: string
-      status_display: string
-      processing_time: number
-      created_at: string
-    }>
-  }
+    user_name: string
+    detection_type_display: string
+    status_display: string
+    processing_time: number
+    created_at: string
+  }>
 }
 
 // 响应类型定义
