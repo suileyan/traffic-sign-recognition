@@ -33,8 +33,9 @@ import type {
   UpdateTrafficUserRequest,
   TrafficUserQueryParams,
   CreateUserStatisticsRequest,
-  UserStatisticsQueryParams
-} from '@/types/apis/hzsystem_traffic_T'
+  UserStatisticsQueryParams,
+  SystemStatisticsOverview,
+} from "@/types/apis/hzsystem_traffic_T";
 import serviceAxios from '@/http'
 
 // ==================== 1.1 数据集展示接口 ====================
@@ -386,11 +387,13 @@ export function deleteUserStatisticsAPI(id: number): Promise<ApiResponse> {
 /**
  * 获取系统统计概览
  */
-export function getSystemStatisticsOverviewAPI(): Promise<SystemStatisticsOverviewResponse> {
+export function getSystemStatisticsOverviewAPI(): Promise<
+  ApiResponse<SystemStatisticsOverview>
+> {
   return serviceAxios({
-    url: '/api/traffic/statistics/overview/',
-    method: 'get'
-  })
+    url: "/api/traffic/statistics/overview/",
+    method: "get",
+  });
 }
 
 /**

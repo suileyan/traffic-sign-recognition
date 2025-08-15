@@ -88,131 +88,82 @@
     },
     transition: { duration: 0.6, delay: 0.3, ease: ["easeOut"] },
   };
-  import { getStatisticsOverviewAPI, getDetectionRecordsAPI } from '@/api/admin/hzsystem_rubbish'
-  import type { DetectionRecord } from '@/types/apis/hzsystem_rubbish_T'
+  import { getSystemStatisticsOverviewAPI, getUserDetailedStatisticsAPI } from '@/api/hzsystem_traffic/hzsystem_traffic'
+  import type { SystemStatisticsOverviewResponse, UserDetailedStatisticsResponse } from '@/api/hzsystem_traffic/hzsystem_traffic_T'
   import { ref, onMounted, computed } from 'vue'
-  const statistics = ref()
-  const detectionRecords = ref<DetectionRecord[]>([])
+  const statistics = ref<SystemStatisticsOverviewResponse>()
   const loading = ref(false)
   
   const fetchStatistics = async () => {
     loading.value = true
     try {
-      statistics.value = await getStatisticsOverviewAPI()
+      statistics.value = await getSystemStatisticsOverviewAPI()
+    } catch (error) {
+      console.error('获取统计数据失败:', error)
     } finally {
       loading.value = false
     }
   }
   
-  const fetchDetectionRecords = async () => {
-    try {
-      detectionRecords.value = await getDetectionRecordsAPI()
-    } catch (error) {
-      console.error('获取检测记录失败:', error)
-    }
-  }
-  
   onMounted(() => {
     fetchStatistics()
-    fetchDetectionRecords()
   })
   
   const dashboardData = computed(() => {
-    if (!detectionRecords.value.length) {
+    if (!statistics.value) {
       return {
         totalUsers: { value: 0, change: '', label: '总用户数' },
         totalDetections: { value: 0, change: '', label: '总检测次数' },
         averageAccuracy: { value: '--', change: '', label: '平均准确率' },
-        averageResponseTime: { value: '--', change: '', label: '平均响应时间' },
+        systemAvailability: { value: '--', change: '', label: '系统可用性' },
       };
     }
   
-    const records = detectionRecords.value;
+    const stats = statistics.value;
     
-    // 计算总检测数（与history页面一致）
-    const totalDetections = records.length;
-    
-    // 计算总用户数（去重，与history页面一致）
-    const uniqueUsers = new Set(records.map(record => record.user));
-    const totalUsers = uniqueUsers.size;
-    
-    // 计算准确率（基于置信度平均值，与history页面一致）
-    const avgConfidence = records.length > 0 
-      ? records.reduce((sum, record) => sum + record.confidence, 0) / records.length
-      : 0;
-    const accuracyRate = Math.round(avgConfidence * 1000) / 10; // 保留一位小数
-    
-    // 计算平均响应时间（基于检测记录的处理时间）
-    const avgResponseTime = records.length > 0
-      ? records.reduce((sum, record) => sum + record.processing_time, 0) / records.length
-      : 0;
-  
     return {
       totalUsers: {
-        value: totalUsers,
+        value: stats.total_users,
         change: '',
         label: '总用户数',
       },
       totalDetections: {
-        value: totalDetections,
+        value: stats.total_detections,
         change: '',
         label: '总检测次数',
       },
       averageAccuracy: {
-        value: accuracyRate > 0 ? `${accuracyRate}%` : '--',
+        value: `${stats.average_accuracy}%`,
         change: '',
         label: '平均准确率',
       },
-      averageResponseTime: {
-        value: avgResponseTime > 0 ? `${avgResponseTime.toFixed(2)}s` : '--',
+      systemAvailability: {
+        value: `${stats.system_availability}%`,
         change: '',
-        label: '平均响应时间',
+        label: '系统可用性',
       },
     };
   })
   
-  // 基于检测记录的用户增长趋势（按月统计最近6个月）
+  // 用户增长趋势（模拟数据）
   const userGrowthData = computed((): EChartsOption => {
-    if (!detectionRecords.value.length) {
-      return {
-        title: { text: '用户增长趋势', left: 'center' },
-        tooltip: { trigger: 'axis' },
-        xAxis: { type: 'category', data: ['1月', '2月', '3月', '4月', '5月', '6月'] },
-        yAxis: { type: 'value' },
-        series: [{ data: [0, 0, 0, 0, 0, 0], type: 'line', smooth: true, itemStyle: { color: '#3b82f6' } }]
-      }
-    }
-  
-    // 获取最近6个月的数据
+    // 获取最近6个月的标签
     const now = new Date()
     const last6Months = Array.from({ length: 6 }, (_, i) => {
       const date = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1)
-      return {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        label: `${date.getMonth() + 1}月`
-      }
+      return `${date.getMonth() + 1}月`
     })
   
-    // 统计每月活跃用户数（有检测记录的用户）
-    const monthlyUserCounts = last6Months.map(monthInfo => {
-      const uniqueUsers = new Set()
-      detectionRecords.value.forEach(record => {
-        const recordDate = new Date(record.created_at)
-        if (recordDate.getFullYear() === monthInfo.year && recordDate.getMonth() + 1 === monthInfo.month) {
-          uniqueUsers.add(record.user)
-        }
-      })
-      return uniqueUsers.size
-    })
+    // 模拟用户增长数据
+    const mockData = [120, 150, 180, 220, 280, 320]
   
     return {
-      title: { text: '用户活跃趋势（最近6个月）', left: 'center' },
+      title: { text: '用户增长趋势（最近6个月）', left: 'center' },
       tooltip: { trigger: 'axis' },
-      xAxis: { type: 'category', data: last6Months.map(m => m.label) },
+      xAxis: { type: 'category', data: last6Months },
       yAxis: { type: 'value' },
       series: [{
-        data: monthlyUserCounts,
+        data: mockData,
         type: 'line',
         smooth: true,
         itemStyle: { color: '#3b82f6' }
@@ -220,66 +171,27 @@
     }
   })
   
-  // 基于检测记录的检测量统计（按天统计最近7天）
+  // 检测量统计（模拟数据）
   const detectionStatsData = computed((): EChartsOption => {
-    if (!detectionRecords.value.length) {
-      return {
-        title: { text: '检测量统计', left: 'center' },
-        tooltip: { trigger: 'axis' },
-        xAxis: { type: 'category', data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'] },
-        yAxis: { type: 'value' },
-        series: [{ 
-          data: [0, 0, 0, 0, 0, 0, 0], 
-          type: 'line', 
-          smooth: true,
-          itemStyle: { color: '#10b981' },
-          lineStyle: { color: '#10b981' },
-          areaStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                { offset: 0, color: 'rgba(16, 185, 129, 0.3)' },
-                { offset: 1, color: 'rgba(16, 185, 129, 0.1)' }
-              ]
-            }
-          }
-        }]
-      }
-    }
-  
-    // 获取最近7天的数据
+    // 生成最近7天的星期标签
     const now = new Date()
     const last7Days = Array.from({ length: 7 }, (_, i) => {
       const date = new Date(now)
       date.setDate(date.getDate() - (6 - i))
-      return date.toISOString().split('T')[0]
-    })
-  
-    // 统计每天的检测次数
-    const dailyCounts = last7Days.map(date => {
-      return detectionRecords.value.filter(record => {
-        const recordDate = new Date(record.created_at).toISOString().split('T')[0]
-        return recordDate === date
-      }).length
-    })
-  
-    // 生成星期标签
-    const weekLabels = last7Days.map(date => {
       const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-      return weekdays[new Date(date).getDay()]
+      return weekdays[date.getDay()]
     })
+  
+    // 模拟检测量数据
+    const mockData = [45, 52, 38, 67, 73, 89, 56]
   
     return {
       title: { text: '检测量统计（最近7天）', left: 'center' },
       tooltip: { trigger: 'axis' },
-      xAxis: { type: 'category', data: weekLabels },
+      xAxis: { type: 'category', data: last7Days },
       yAxis: { type: 'value' },
       series: [{
-        data: dailyCounts,
+        data: mockData,
         type: 'line',
         smooth: true,
         itemStyle: { color: '#10b981' },
@@ -301,76 +213,58 @@
     }
   })
   
-  const wasteDistributionData = computed((): EChartsOption => statistics.value ? {
-    title: { text: '垃圾分类分布', left: 'center' },
-    tooltip: { trigger: 'item' },
-    legend: { orient: 'vertical', left: 'left' },
-    series: [
-      {
-        name: '垃圾类型',
-        type: 'pie',
-        radius: '50%',
-        data: statistics.value.category_distribution.map((item: {detected_category__name: string, count: number}) => ({ value: item.count, name: item.detected_category__name })),
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
-      },
-    ],
-  } : {
-    title: { text: '垃圾分类分布', left: 'center' },
-    tooltip: { trigger: 'item' },
-    legend: { orient: 'vertical', left: 'left' },
-    series: [
-      {
-        name: '垃圾类型',
-        type: 'pie',
-        radius: '50%',
-        data: [],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
-      },
-    ],
-  })
-  
-  // 基于检测记录的模型性能监控（准确率与history页面一致）
-  const modelPerformanceData = computed((): EChartsOption => {
-    if (!detectionRecords.value.length) {
+  const trafficSignDistributionData = computed((): EChartsOption => {
+    if (!statistics.value || !statistics.value.category_distribution) {
       return {
-        title: { text: '模型性能监控', left: 'center' },
-        tooltip: { formatter: '{a} <br/>{b} : {c}%' },
-        series: [{
-          name: '准确率',
-          type: 'gauge',
-          detail: { formatter: '{value}%' },
-          data: [{ value: 0, name: '准确率' }],
-          axisLine: {
-            lineStyle: {
-              color: [
-                [0.3, '#ff4757'],
-                [0.7, '#ffa502'],
-                [1, '#2ed573'],
-              ],
+        title: { text: '交通标志分类分布', left: 'center' },
+        tooltip: { trigger: 'item' },
+        legend: { orient: 'vertical', left: 'left' },
+        series: [
+          {
+            name: '标志类型',
+            type: 'pie',
+            radius: '50%',
+            data: [],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+              },
             },
           },
-        }]
+        ],
       }
     }
   
-    // 计算准确率（基于置信度平均值，与history页面逻辑一致）
-    const records = detectionRecords.value
-    const avgConfidence = records.length > 0 
-      ? records.reduce((sum, record) => sum + record.confidence, 0) / records.length
-      : 0
-    const accuracyRate = Math.round(avgConfidence * 1000) / 10 // 保留一位小数
+    return {
+      title: { text: '交通标志分类分布', left: 'center' },
+      tooltip: { trigger: 'item' },
+      legend: { orient: 'vertical', left: 'left' },
+      series: [
+        {
+          name: '标志类型',
+          type: 'pie',
+          radius: '50%',
+          data: statistics.value.category_distribution.map((item) => ({ 
+            value: item.count, 
+            name: item.traffic_sign__category__name 
+          })),
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      ],
+    }
+  })
+  
+  // 模型性能监控
+  const modelPerformanceData = computed((): EChartsOption => {
+    const accuracyRate = statistics.value ? statistics.value.average_accuracy : 0
   
     return {
       title: { text: '模型性能监控', left: 'center' },
@@ -547,7 +441,7 @@
               <div class="flex items-center justify-between">
                 <div>
                   <p class="text-purple-600 text-sm font-medium">
-                    {{ dashboardData.averageResponseTime.label }}
+                    {{ dashboardData.systemAvailability.label }}
                   </p>
                   <Motion
                     :initial="{ opacity: 0, y: 10 }"
@@ -555,10 +449,10 @@
                     :transition="{ duration: 0.4, delay: 0.9 }"
                   >
                     <p class="text-2xl font-bold text-purple-900">
-                      {{ dashboardData.averageResponseTime.value }}
+                      {{ dashboardData.systemAvailability.value }}
                     </p>
                     <p class="text-sm text-purple-600 mt-1">
-                      {{ dashboardData.averageResponseTime.change }}
+                      {{ dashboardData.systemAvailability.change }}
                     </p>
                   </Motion>
                 </div>
@@ -629,7 +523,7 @@
           </el-card>
         </Motion>
   
-        <!-- 垃圾分类分布 -->
+        <!-- 交通标志分类分布 -->
         <Motion
           :initial="cardVariants.initial"
           :animate="cardVariants.animate"
@@ -638,7 +532,7 @@
         >
           <el-card>
             <template #header>
-              <span class="font-medium">垃圾分类分布</span>
+              <span class="font-medium">交通标志分类分布</span>
             </template>
             <div class="h-64">
               <Motion
@@ -647,7 +541,7 @@
                 :animate="{ opacity: 1, scale: 1 }"
                 :transition="{ duration: 0.5, delay: 1.2 }"
               >
-                <v-chart :option="wasteDistributionData" class="w-full h-full" autoresize />
+                <v-chart :option="trafficSignDistributionData" class="w-full h-full" autoresize />
               </Motion>
             </div>
           </el-card>
