@@ -1,13 +1,13 @@
 <template>
   <div class="statistics-page">
     <!-- 页面标题 -->
-    <div class="page-header">
+    <div class="page-header animate-fade-in-up">
       <h1 class="page-title">统计信息</h1>
       <p class="page-subtitle">查看检测统计数据和分析报告</p>
     </div>
 
     <!-- 统计数据卡片 -->
-    <div class="stats-cards">
+    <div class="stats-cards animate-fade-in-up animation-delay-200">
       <div class="stat-card">
         <div class="stat-value">1,234</div>
         <div class="stat-label">总检测次数</div>
@@ -40,7 +40,7 @@
     </div>
 
     <!-- 图表区域 -->
-    <div class="charts-section">
+    <div class="charts-section animate-fade-in-up animation-delay-400">
       <!-- 检测类型分布 -->
       <div class="chart-card">
         <div class="chart-header">
@@ -474,5 +474,30 @@ onMounted(() => {
   .chart-container {
     height: 250px;
   }
+}
+
+/* 自定义动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
 }
 </style>

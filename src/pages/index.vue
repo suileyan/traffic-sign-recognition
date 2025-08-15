@@ -3,7 +3,7 @@
     <!-- 顶部标题和数据展示区域 -->
     <div class="container mx-auto px-6 py-12">
       <!-- 系统标题 -->
-      <div class="text-center mb-16">
+      <div class="text-center mb-16 animate-fade-in-up">
         <h1 class="text-5xl font-bold text-gray-800 mb-4">
           智能交通标志识别系统
         </h1>
@@ -12,7 +12,7 @@
         </p>
         
         <!-- 数据展示卡片 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto animate-fade-in-up animation-delay-200">
           <div class="bg-white rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
             <div class="text-4xl font-bold text-green-500 mb-2">98.5%</div>
             <div class="text-gray-600 font-medium">识别准确率</div>
@@ -29,7 +29,7 @@
       </div>
 
       <!-- 功能卡片区域 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto animate-fade-in-up animation-delay-400">
         <!-- 卡片1：实时识别 -->
         <div class="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 cursor-pointer group">
           <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-200 transition-colors">
@@ -197,5 +197,30 @@ onMounted(() => {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* 自定义动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
 }
 </style>

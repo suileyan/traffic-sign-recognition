@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
     <div class="container mx-auto px-6 py-12">
       <!-- 页面标题 -->
-      <div class="text-center mb-12">
+      <div class="text-center mb-12 animate-fade-in-up">
         <h1 class="text-5xl font-bold text-gray-800 mb-4">
           智能检测
         </h1>
@@ -12,7 +12,7 @@
       </div>
 
       <!-- 选项卡导航 -->
-      <div class="max-w-4xl mx-auto mb-8">
+      <div class="max-w-4xl mx-auto mb-8 animate-fade-in-up animation-delay-200">
         <div class="bg-white rounded-2xl shadow-lg p-2">
           <div class="grid grid-cols-3 gap-2">
             <button
@@ -36,7 +36,7 @@
       </div>
 
       <!-- 内容区域 -->
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-6xl mx-auto animate-fade-in-up animation-delay-400">
         <div class="bg-white rounded-2xl shadow-lg p-8">
           <!-- 图片检测内容 -->
           <ImageDetection v-if="activeTab === 'image'" />
@@ -119,5 +119,30 @@ const tabs = ref([
 /* 卡片悬停效果 */
 .transform:hover {
   transform: translateY(-4px) scale(1.02);
+}
+
+/* 自定义动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
 }
 </style>

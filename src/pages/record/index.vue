@@ -3,7 +3,7 @@
     <!-- 页面头部 -->
     <div class="">
       <div class="max-w-6xl mx-auto px-6 py-8">
-        <div class="text-center">
+        <div class="text-center animate-fade-in-up">
           <h1 class="text-5xl font-bold text-gray-800 mb-4">检测记录</h1>
           <p class="text-xl text-gray-600 mb-8">查看和管理历史检测记录</p>
         </div>
@@ -13,7 +13,7 @@
     <!-- 主要内容区域 -->
     <div class="max-w-6xl mx-auto px-6 py-6">
       <!-- 筛选区域 -->
-      <div class="bg-white rounded-lg border border-gray-200 p-5 mb-6">
+      <div class="bg-white rounded-lg border border-gray-200 p-5 mb-6 animate-fade-in-up animation-delay-200">
         <div class="flex flex-wrap gap-4 items-end">
           <div class="flex-1 min-w-40">
             <label class="block text-sm text-gray-600 mb-1">检测类型</label>
@@ -54,10 +54,11 @@
       </div>
 
       <!-- 历史记录列表 -->
-      <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+      <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden animate-fade-in-up animation-delay-400">
         <div v-for="(record, index) in paginatedRecords" :key="record.id" :class="[
-          'p-6 hover:bg-gray-50 transition-colors border-gray-200',
-          index !== paginatedRecords.length - 1 ? 'border-b' : ''
+          'p-6 hover:bg-gray-50 transition-colors border-gray-200 animate-fade-in-up',
+          index !== paginatedRecords.length - 1 ? 'border-b' : '',
+          `animation-delay-${600 + index * 100}`
         ]">
           <div class="flex gap-6">
             <!-- 图片区域 -->
@@ -512,4 +513,69 @@ const deleteRecord = (id) => {
 
 <style scoped>
 /* 组件样式 */
+
+/* 自定义动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+.animation-delay-700 {
+  animation-delay: 700ms;
+}
+
+.animation-delay-800 {
+  animation-delay: 800ms;
+}
+
+.animation-delay-900 {
+  animation-delay: 900ms;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1000ms;
+}
+
+.animation-delay-1100 {
+  animation-delay: 1100ms;
+}
+
+.animation-delay-1200 {
+  animation-delay: 1200ms;
+}
+
+.animation-delay-1300 {
+  animation-delay: 1300ms;
+}
+
+.animation-delay-1400 {
+  animation-delay: 1400ms;
+}
+
+.animation-delay-1500 {
+  animation-delay: 1500ms;
+}
 </style>
