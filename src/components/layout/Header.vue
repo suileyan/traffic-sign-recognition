@@ -3,7 +3,6 @@ import { provide, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import router from '@/router'
 import LanguageSwitch from './btns/LanguageSwitch.vue'
-import Search from './btns/search.vue'
 import ThemeSwitch from './btns/ThemeSwitch.vue'
 import MenuItems from './MenuItems.vue'
 import serverConfig, { defaultMenuItems } from '@/configs'
@@ -102,14 +101,13 @@ provide('toggleSubmenu', toggleSubmenu)
         </ul>
       </div>
       <a href="/" class="btn btn-ghost text-xl">{{ serverConfig.VITE_APP_TITLE }}</a>
-      <search />
     </div>
     <div class="navbar-center hidden lg:flex">
+    </div>
+    <div class="navbar-end">
       <ul class="menu lg:menu-horizontal rounded-box">
         <MenuItems :menu-items="menuItems" />
       </ul>
-    </div>
-    <div class="navbar-end">
       <div class="flex items-center gap-2">
         <LanguageSwitch />
         <ThemeSwitch />
