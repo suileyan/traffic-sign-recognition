@@ -17,15 +17,23 @@ const store = useUserStore()
 
 const { userInfo, getUserAvatar } = storeToRefs(store)
 
+interface UserMenuItem {
+  title: string
+  class: string
+  badge?: string
+  hide?: boolean
+  event: () => void
+}
+
+
 // 使用store中的头像方法
 const avatar = getUserAvatar
 
 // 用户头像下拉菜单项
-const userMenuItems = ref([
+const userMenuItems = ref<UserMenuItem[]>([
   {
     title: '个人资料',
     class: 'justify-between',
-    badge: '新',
     event: () => {
       console.log('跳转到个人资料页面')
       router.push('/userInfo')
@@ -117,7 +125,7 @@ provide('toggleSubmenu', toggleSubmenu)
             <li v-for="(item, index) in userMenuItems" :key="index" v-show="!item.hide">
               <a :class="item.class" :title="item.title" @click="item.event">
                 {{ item.title }}
-                <span v-if="item.badge" class="badge">{{ item.badge }}</span>
+                <span v-if="item?.badge" class="badge">{{ item?.badge }}</span>
               </a>
             </li>
           </ul>
