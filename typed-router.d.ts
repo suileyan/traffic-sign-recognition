@@ -30,6 +30,7 @@ declare module 'vue-router/auto-routes' {
     '/auth/Register/': RouteRecordInfo<'/auth/Register/', '/auth/Register', Record<never, never>, Record<never, never>>,
     '/detection/': RouteRecordInfo<'/detection/', '/detection', Record<never, never>, Record<never, never>>,
     '/motion-demo': RouteRecordInfo<'/motion-demo', '/motion-demo', Record<never, never>, Record<never, never>>,
+    '/record/': RouteRecordInfo<'/record/', '/record', Record<never, never>, Record<never, never>>,
     '/userInfo/': RouteRecordInfo<'/userInfo/', '/userInfo', Record<never, never>, Record<never, never>>,
   }
 
@@ -90,6 +91,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/motion-demo.vue': {
       routes: '/motion-demo'
+      views: never
+    }
+    'src/pages/record/index.vue': {
+      routes: '/record/'
       views: never
     }
     'src/pages/userInfo/index.vue': {
