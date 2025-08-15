@@ -267,6 +267,96 @@ const records = ref([
     result: '危险警告',
     confidence: 67.3,
     image: 'https://via.placeholder.com/96x96/f97316/ffffff?text=!'
+  },
+  {
+    id: 6,
+    title: '直行标志检测',
+    detectTime: '2024-01-12 15:30:45',
+    type: 'image',
+    result: '直行标志',
+    confidence: 91.5,
+    image: 'https://via.placeholder.com/96x96/10b981/ffffff?text=↑'
+  },
+  {
+    id: 7,
+    title: '左转标志检测',
+    detectTime: '2024-01-12 11:20:30',
+    type: 'video',
+    result: '左转标志',
+    confidence: 88.7,
+    image: 'https://via.placeholder.com/96x96/8b5cf6/ffffff?text=←'
+  },
+  {
+    id: 8,
+    title: '右转标志检测',
+    detectTime: '2024-01-11 16:45:12',
+    type: 'realtime',
+    result: '右转标志',
+    confidence: 93.2,
+    image: 'https://via.placeholder.com/96x96/06b6d4/ffffff?text=→'
+  },
+  {
+    id: 9,
+    title: '禁止左转标志检测',
+    detectTime: '2024-01-11 14:15:28',
+    type: 'image',
+    result: '禁止左转',
+    confidence: 85.9,
+    image: 'https://via.placeholder.com/96x96/ef4444/ffffff?text=⊘←'
+  },
+  {
+    id: 10,
+    title: '限速40标志检测',
+    detectTime: '2024-01-10 10:30:55',
+    type: 'video',
+    result: '限速40标志',
+    confidence: 92.4,
+    image: 'https://via.placeholder.com/96x96/3b82f6/ffffff?text=40'
+  },
+  {
+    id: 11,
+    title: '人行横道标志检测',
+    detectTime: '2024-01-10 08:45:33',
+    type: 'image',
+    result: '人行横道',
+    confidence: 89.6,
+    image: 'https://via.placeholder.com/96x96/059669/ffffff?text=🚶'
+  },
+  {
+    id: 12,
+    title: '学校区域标志检测',
+    detectTime: '2024-01-09 16:20:18',
+    type: 'realtime',
+    result: '学校区域',
+    confidence: 95.1,
+    image: 'https://via.placeholder.com/96x96/f59e0b/ffffff?text=🏫'
+  },
+  {
+    id: 13,
+    title: '施工标志检测',
+    detectTime: '2024-01-09 13:55:42',
+    type: 'image',
+    result: '施工标志',
+    confidence: 78.3,
+    image: 'https://via.placeholder.com/96x96/f97316/ffffff?text=🚧'
+  },
+  {
+    id: 14,
+    title: '禁止鸣笛标志检测',
+    detectTime: '2024-01-08 12:10:25',
+    type: 'video',
+    result: '禁止鸣笛',
+    confidence: 86.7,
+    image: 'https://via.placeholder.com/96x96/dc2626/ffffff?text=🔇'
+  },
+  {
+    id: 15,
+    title: '环岛标志检测',
+    detectTime: '2024-01-08 09:35:15',
+    type: 'image',
+    result: '环岛标志',
+    confidence: 90.8,
+    image: 'https://via.placeholder.com/96x96/8b5cf6/ffffff?text=⭕'
   }
 ])
 
