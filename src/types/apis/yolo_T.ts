@@ -63,9 +63,9 @@ export interface VideoDetectionResults {
 }
 
 export interface FrameDetection {
-  frame_number: number
+  frame_index: number
   timestamp: number
-  detections: Detection[]
+  detections: ActualDetection[]
 }
 
 export interface DetectionStatistics {
@@ -86,14 +86,23 @@ export interface ImageDetectionRequest {
   return_image?: boolean
 }
 
+// API返回的检测结果格式
+export interface ActualDetection {
+  sign_name: string
+  category: string
+  confidence: number
+  bbox: [number, number, number, number] // [x, y, width, height]
+  class_id: number
+}
+
 export interface ImageDetectionResponse {
-  task_id: string
-  detection_id: number
+  success: boolean
+  record_id: number
+  detections: ActualDetection[]
   processing_time: number
-  image_info: ImageInfo
-  detection_results: DetectionResults
-  result_image_url: string | null
-  statistics: DetectionStatistics
+  original_image: string
+  result_image: string
+  detected_category: string | null
 }
 
 // 视频检测请求和响应
@@ -107,13 +116,21 @@ export interface VideoDetectionRequest {
 }
 
 export interface VideoDetectionResponse {
-  task_id: string
-  detection_id: number
+  success: boolean
+  record_id: number
+  frame_detections: FrameDetection[]
+  summary: {
+    total_frames: number
+    processed_frames: number
+    total_detections: number
+    unique_signs: string[]
+    unique_categories: string[]
+    video_duration: number
+    fps: number
+  }
   processing_time: number
-  video_info: VideoInfo
-  detection_results: VideoDetectionResults
-  result_video_url: string | null
-  statistics: DetectionStatistics
+  original_video: string
+  detected_category: string | null
 }
 
 // YOLO模型相关类型

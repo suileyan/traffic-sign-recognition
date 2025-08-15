@@ -10,22 +10,59 @@
     <!-- 检测结果区 -->
     <div v-if="result" class="mb-6">
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mx-auto max-w-md">
-        <img :src="result.image_url" alt="检测结果" class="w-full rounded mb-4" v-if="result.image_url" />
-        <div class="text-left">
-          <div class="font-bold text-lg text-gray-800 mb-2">识别结果</div>
+        <img :src="`${serverPath}${result.result_image}`" alt="检测结果" class="w-full rounded mb-4" v-if="result.result_image" />
+         <div class="text-left">
+           <div class="font-bold text-lg text-gray-800 mb-2">识别结果</div>
+           <div class="mb-3 text-sm text-gray-600">
+             <span>检测数量: {{ result.detections.length }}</span>
+             <span class="ml-4">处理时间: {{ (result.processing_time * 1000).toFixed(0) }}ms</span>
+           </div>
           <div v-if="result.detections && result.detections.length">
-            <div v-for="(item, idx) in result.detections" :key="idx" class="mb-2 p-2 bg-blue-50 rounded">
-              <span class="text-blue-700 font-semibold">{{ item.label }}</span>
-              <span class="ml-2 text-gray-600">置信度: {{ (item.confidence * 100).toFixed(1) }}%</span>
-            </div>
-          </div>
+             <div v-for="(item, idx) in result.detections" :key="idx" class="mb-2 p-2 bg-blue-50 rounded">
+               <div class="flex justify-between items-center">
+                 <div>
+                   <span class="text-blue-700 font-semibold">{{ item.sign_name }}</span>
+                   <span class="ml-2 text-sm text-gray-500">({{ item.category }})</span>
+                 </div>
+                 <span class="text-gray-600">{{ (item.confidence * 100).toFixed(1) }}%</span>
+               </div>
+             </div>
+           </div>
           <div v-else class="text-gray-500">未检测到交通标志</div>
         </div>
         <button @click="reset" class="mt-4 px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50">重新上传</button>
       </div>
     </div>
     <!-- 图片上传区域 -->
-    <div class="mb-6" v-else>
+    <div class="mb-6 relative" v-else>
+      <!-- 参数配置 - 右上角 -->
+      <div class="absolute top-0 right-0 z-10">
+        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm w-64">
+          <h4 class="text-sm font-medium text-gray-800 mb-3">检测参数</h4>
+          <div class="space-y-3">
+            <!-- 置信度阈值 -->
+            <div>
+              <label class="block text-xs text-gray-600 mb-1">置信度阈值</label>
+              <input type="range" min="0" max="1" step="0.1" v-model.number="confidenceThreshold" 
+                     class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer slider" />
+              <div class="text-center text-xs text-blue-600 font-medium mt-1">{{ confidenceThreshold }}</div>
+            </div>
+            <!-- 复选框选项 -->
+            <div class="space-y-2">
+              <label class="flex items-center text-xs text-gray-600 cursor-pointer">
+                <input type="checkbox" v-model="saveResult" 
+                       class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-1 mr-2" />
+                保存检测结果
+              </label>
+              <label class="flex items-center text-xs text-gray-600 cursor-pointer">
+                <input type="checkbox" v-model="returnImage" 
+                       class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-1 mr-2" />
+                返回检测图片
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
       <ReceiveFiles 
         model="image" 
         @file-selected="handleFileSelected"
@@ -49,25 +86,53 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref, computed } from 'vue'
 import ReceiveFiles from '@/components/ReceiveFiles.vue'
 import { detectImageAPI } from '@/api/yolo/yoloApi'
+import type { ImageDetectionResponse } from '@/types/apis/yolo_T'
 
-const result = ref(null)
-const loading = ref(false)
+const result = ref<ImageDetectionResponse | null>(null)
+const serverPath = computed(() => import.meta.env.VITE_SERVER_PATH)
+const loading = ref<boolean>(false)
+const confidenceThreshold = ref<number>(0.5)
+const saveResult = ref<boolean>(false)
+const returnImage = ref<boolean>(true)
 
-const handleFileSelected = async (file) => {
+const handleFileSelected = async (file: File) => {
   loading.value = true
   try {
-    const res = await detectImageAPI({ image: file })
-    if (res && res.code === 200 && res.data) {
-      result.value = res.data
+    const res = await detectImageAPI({ 
+      image: file, 
+      confidence_threshold: confidenceThreshold.value,
+      save_result: saveResult.value,
+      return_image: returnImage.value
+    })
+    console.log('API响应:', res)
+    
+    if (res) {
+      result.value = res
     } else {
-      result.value = { detections: [], image_url: '' }
+      result.value = {
+        success: false,
+        record_id: 0,
+        detections: [],
+        processing_time: 0,
+        original_image: '',
+        result_image: '',
+        detected_category: null
+      }
     }
   } catch (e) {
-    result.value = { detections: [], image_url: '' }
+    result.value = {
+      success: false,
+      record_id: 0,
+      detections: [],
+      processing_time: 0,
+      original_image: '',
+      result_image: '',
+      detected_category: null
+    }
   } finally {
     loading.value = false
   }
@@ -79,5 +144,50 @@ const reset = () => {
 </script>
 
 <style scoped>
-/* 组件样式 */
+/* 滑块样式 */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-webkit-slider-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.slider::-moz-range-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  border: none;
+}
+
+.slider {
+  background: transparent;
+}
+
+.slider:focus {
+  outline: none;
+}
+
+.slider:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
 </style>

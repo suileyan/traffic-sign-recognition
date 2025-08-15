@@ -26,28 +26,33 @@ import serviceAxios from '@/http'
  * @param data 图片检测请求数据
  * @returns Promise<BaseResponse<ImageDetectionResponse>>
  */
-export function detectImageAPI(data: ImageDetectionRequest): Promise<BaseResponse<ImageDetectionResponse>> {
-  const formData = new FormData()
-  formData.append('image', data.image)
-  
+export function detectImageAPI(
+  data: ImageDetectionRequest
+): Promise<ImageDetectionResponse> {
+  const formData = new FormData();
+  formData.append("image", data.image);
+
   if (data.confidence_threshold !== undefined) {
-    formData.append('confidence_threshold', data.confidence_threshold.toString())
+    formData.append(
+      "confidence_threshold",
+      data.confidence_threshold.toString()
+    );
   }
   if (data.save_result !== undefined) {
-    formData.append('save_result', data.save_result.toString())
+    formData.append("save_result", data.save_result.toString());
   }
   if (data.return_image !== undefined) {
-    formData.append('return_image', data.return_image.toString())
+    formData.append("return_image", data.return_image.toString());
   }
 
   return serviceAxios({
-    url: '/api/yolo/detect/image/',
-    method: 'post',
+    url: "/api/yolo/detect/image/",
+    method: "post",
     data: formData,
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 /**
@@ -55,34 +60,39 @@ export function detectImageAPI(data: ImageDetectionRequest): Promise<BaseRespons
  * @param data 视频检测请求数据
  * @returns Promise<BaseResponse<VideoDetectionResponse>>
  */
-export function detectVideoAPI(data: VideoDetectionRequest): Promise<BaseResponse<VideoDetectionResponse>> {
-  const formData = new FormData()
-  formData.append('video', data.video)
-  
+export function detectVideoAPI(
+  data: VideoDetectionRequest
+): Promise<VideoDetectionResponse> {
+  const formData = new FormData();
+  formData.append("video", data.video);
+
   if (data.confidence_threshold !== undefined) {
-    formData.append('confidence_threshold', data.confidence_threshold.toString())
+    formData.append(
+      "confidence_threshold",
+      data.confidence_threshold.toString()
+    );
   }
   if (data.frame_interval !== undefined) {
-    formData.append('frame_interval', data.frame_interval.toString())
+    formData.append("frame_interval", data.frame_interval.toString());
   }
   if (data.save_result !== undefined) {
-    formData.append('save_result', data.save_result.toString())
+    formData.append("save_result", data.save_result.toString());
   }
   if (data.return_video !== undefined) {
-    formData.append('return_video', data.return_video.toString())
+    formData.append("return_video", data.return_video.toString());
   }
   if (data.max_duration !== undefined) {
-    formData.append('max_duration', data.max_duration.toString())
+    formData.append("max_duration", data.max_duration.toString());
   }
 
   return serviceAxios({
-    url: '/api/yolo/detect/video/',
-    method: 'post',
+    url: "/api/yolo/detect/video/",
+    method: "post",
     data: formData,
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 // ==================== YOLO模型管理接口 ====================
@@ -92,12 +102,14 @@ export function detectVideoAPI(data: VideoDetectionRequest): Promise<BaseRespons
  * @param params 查询参数
  * @returns Promise<YoloModelListResponse>
  */
-export function getYoloModelsAPI(params?: GetYoloModelsParams): Promise<YoloModelListResponse> {
+export function getYoloModelsAPI(
+  params?: GetYoloModelsParams
+): Promise<YoloModelListResponse> {
   return serviceAxios({
-    url: '/api/yolo/models/',
-    method: 'get',
-    params
-  })
+    url: "/api/yolo/models/",
+    method: "get",
+    params,
+  });
 }
 
 /**
@@ -105,11 +117,11 @@ export function getYoloModelsAPI(params?: GetYoloModelsParams): Promise<YoloMode
  * @param id 模型ID
  * @returns Promise<BaseResponse<YoloModel>>
  */
-export function getYoloModelAPI(id: number): Promise<BaseResponse<YoloModel>> {
+export function getYoloModelAPI(id: number): Promise<YoloModel> {
   return serviceAxios({
     url: `/api/yolo/models/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
@@ -117,12 +129,14 @@ export function getYoloModelAPI(id: number): Promise<BaseResponse<YoloModel>> {
  * @param data 创建模型请求数据
  * @returns Promise<BaseResponse<YoloModel>>
  */
-export function createYoloModelAPI(data: CreateYoloModelRequest): Promise<BaseResponse<YoloModel>> {
+export function createYoloModelAPI(
+  data: CreateYoloModelRequest
+): Promise<YoloModel> {
   return serviceAxios({
-    url: '/api/yolo/models/',
-    method: 'post',
-    data
-  })
+    url: "/api/yolo/models/",
+    method: "post",
+    data,
+  });
 }
 
 /**
@@ -131,12 +145,15 @@ export function createYoloModelAPI(data: CreateYoloModelRequest): Promise<BaseRe
  * @param data 更新模型请求数据
  * @returns Promise<BaseResponse<YoloModel>>
  */
-export function updateYoloModelAPI(id: number, data: UpdateYoloModelRequest): Promise<BaseResponse<YoloModel>> {
+export function updateYoloModelAPI(
+  id: number,
+  data: UpdateYoloModelRequest
+): Promise<YoloModel> {
   return serviceAxios({
     url: `/api/yolo/models/${id}/`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -144,11 +161,11 @@ export function updateYoloModelAPI(id: number, data: UpdateYoloModelRequest): Pr
  * @param id 模型ID
  * @returns Promise<BaseResponse<void>>
  */
-export function deleteYoloModelAPI(id: number): Promise<BaseResponse<void>> {
+export function deleteYoloModelAPI(id: number): Promise<void> {
   return serviceAxios({
     url: `/api/yolo/models/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 // ==================== 检测任务管理接口 ====================
@@ -158,12 +175,14 @@ export function deleteYoloModelAPI(id: number): Promise<BaseResponse<void>> {
  * @param params 查询参数
  * @returns Promise<YoloDetectionTaskListResponse>
  */
-export function getYoloTasksAPI(params?: GetYoloTasksParams): Promise<YoloDetectionTaskListResponse> {
+export function getYoloTasksAPI(
+  params?: GetYoloTasksParams
+): Promise<YoloDetectionTaskListResponse> {
   return serviceAxios({
-    url: '/api/yolo/tasks/',
-    method: 'get',
-    params
-  })
+    url: "/api/yolo/tasks/",
+    method: "get",
+    params,
+  });
 }
 
 /**
@@ -171,11 +190,11 @@ export function getYoloTasksAPI(params?: GetYoloTasksParams): Promise<YoloDetect
  * @param id 任务ID
  * @returns Promise<BaseResponse<YoloDetectionTask>>
  */
-export function getYoloTaskAPI(id: number): Promise<BaseResponse<YoloDetectionTask>> {
+export function getYoloTaskAPI(id: number): Promise<YoloDetectionTask> {
   return serviceAxios({
     url: `/api/yolo/tasks/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
@@ -183,11 +202,11 @@ export function getYoloTaskAPI(id: number): Promise<BaseResponse<YoloDetectionTa
  * @param id 任务ID
  * @returns Promise<BaseResponse<void>>
  */
-export function deleteYoloTaskAPI(id: number): Promise<BaseResponse<void>> {
+export function deleteYoloTaskAPI(id: number): Promise<void> {
   return serviceAxios({
     url: `/api/yolo/tasks/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 // ==================== 模型性能统计接口 ====================
