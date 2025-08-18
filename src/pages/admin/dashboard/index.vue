@@ -89,7 +89,7 @@
     transition: { duration: 0.6, delay: 0.3, ease: ["easeOut"] },
   };
   import { getSystemStatisticsOverviewAPI, getUserDetailedStatisticsAPI } from '@/api/hzsystem_traffic/hzsystem_traffic'
-  import type { SystemStatisticsOverviewResponse, UserDetailedStatisticsResponse } from '@/api/hzsystem_traffic/hzsystem_traffic_T'
+  import type { SystemStatisticsOverviewResponse, UserDetailedStatisticsResponse } from '@/api/hzsystem_traffic_T'
   import { ref, onMounted, computed } from 'vue'
   const statistics = ref<SystemStatisticsOverviewResponse>()
   const loading = ref(false)

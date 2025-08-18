@@ -205,12 +205,12 @@ const handleDelete = async (row: DetectionRecord) => {
       }
     );
 
-    // 调用删除API
-    await deleteDetectionRecordAPI(row.id);
+    // 调用删除API（等待服务端响应后再继续）
+    await deleteDetectionRecordAPI(row.id)
 
-    // 删除成功后刷新数据
-    ElMessage.success('删除成功');
+    // 删除成功后刷新数据并提示
     await fetchDetectionRecords();
+    ElMessage.success('删除成功');
   } catch (error) {
     if (error !== 'cancel') {
       console.error('删除记录失败:', error);
