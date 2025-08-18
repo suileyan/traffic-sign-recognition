@@ -1,4 +1,5 @@
 import type {
+  // 响应类型
   DatasetResponse,
   TrafficCategoryListResponse,
   TrafficCategoryResponse,
@@ -12,7 +13,10 @@ import type {
   TrafficUserResponse,
   UserStatisticsListResponse,
   UserStatisticsResponse,
+  SystemStatisticsOverviewResponse,
+  UserDetailedStatisticsResponse,
   ApiResponse,
+  // 请求类型
   CreateTrafficCategoryRequest,
   UpdateTrafficCategoryRequest,
   TrafficCategoryQueryParams,
@@ -31,7 +35,6 @@ import type {
   CreateUserStatisticsRequest,
   UserStatisticsQueryParams,
   SystemStatisticsOverview,
-  UserDetailedStatisticsResponse,
 } from "@/types/apis/hzsystem_traffic_T";
 import serviceAxios from '@/http'
 
@@ -378,6 +381,7 @@ export function deleteUserStatisticsAPI(id: number): Promise<ApiResponse> {
     method: 'delete'
   })
 }
+
 // ==================== 1.8 统计接口 ====================
 
 /**
