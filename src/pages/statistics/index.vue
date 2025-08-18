@@ -58,9 +58,9 @@
           <span class="chart-type">饼图</span>
         </div>
         <div class="chart-container">
-          <v-chart 
-            class="chart" 
-            :option="typeDistributionOption" 
+          <v-chart
+            class="chart"
+            :option="typeDistributionOption"
             autoresize
           />
         </div>
@@ -73,9 +73,9 @@
           <span class="chart-type">折线图</span>
         </div>
         <div class="chart-container">
-          <v-chart 
-            class="chart" 
-            :option="detectionVolumeOption" 
+          <v-chart
+            class="chart"
+            :option="detectionVolumeOption"
             autoresize
           />
         </div>
@@ -88,15 +88,15 @@
           <span class="chart-type">折线图</span>
         </div>
         <div class="chart-container">
-          <v-chart 
-            class="chart" 
-            :option="accuracyTrendOption" 
+          <v-chart
+            class="chart"
+            :option="accuracyTrendOption"
             autoresize
           />
         </div>
       </div>
     </div>
-    
+
     <!-- 最近记录 -->
     <div class="bg-white rounded-lg shadow-sm p-6">
       <h3 class="text-lg font-semibold text-gray-800 mb-4">最近检测记录</h3>
@@ -105,8 +105,8 @@
         <p class="mt-2 text-gray-500">加载中...</p>
       </div>
       <div v-else-if="userStatistics?.recent_records?.length" class="space-y-3">
-        <div 
-          v-for="record in userStatistics.recent_records" 
+        <div
+          v-for="record in userStatistics.recent_records"
           :key="record.id"
           class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
         >
@@ -123,7 +123,7 @@
           </div>
           <div class="text-right">
             <div class="flex items-center space-x-2">
-              <span 
+              <span
                 :class="{
                   'bg-green-100 text-green-800': record.status_display === '成功',
                   'bg-red-100 text-red-800': record.status_display === '失败',
@@ -150,7 +150,7 @@
         <p class="mt-2 text-gray-500">暂无检测记录</p>
       </div>
      </div>
-     
+
      <!-- 成就展示 -->
      <div class="bg-white rounded-lg shadow-sm p-6">
        <h3 class="text-lg font-semibold text-gray-800 mb-4">我的成就</h3>
@@ -159,8 +159,8 @@
          <p class="mt-2 text-gray-500">加载中...</p>
        </div>
        <div v-else-if="userStatistics?.achievements?.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-         <div 
-           v-for="achievement in userStatistics.achievements" 
+         <div
+           v-for="achievement in userStatistics.achievements"
            :key="achievement.id"
            class="flex items-center p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border border-yellow-200"
          >
@@ -235,11 +235,11 @@ const statsData = computed(() => {
       avgDetectionTime: '0s'
     }
   }
-  
+
   return {
     totalDetections: userStatistics.value.total_detections,
     accuracyRate: (userStatistics.value.accuracy_rate * 100).toFixed(1) + '%',
-    avgDetectionTime: userStatistics.value.recent_records.length > 0 
+    avgDetectionTime: userStatistics.value.recent_records.length > 0
       ? (userStatistics.value.recent_records.reduce((sum, record) => sum + record.processing_time, 0) / userStatistics.value.recent_records.length).toFixed(2) + 's'
       : '0s',
     weeklyDetections: userStatistics.value.weekly_detections
@@ -326,7 +326,7 @@ const detectionVolumeOption = computed(() => {
     userStatistics.value.monthly_detections,
     Math.floor(userStatistics.value.monthly_detections * 1.1)
   ] : [0, 0, 0, 0, 0, 0, 0]
-  
+
   return {
     tooltip: {
       trigger: 'axis'
@@ -582,26 +582,26 @@ onMounted(async () => {
   .statistics-page {
     padding: 16px;
   }
-  
+
   .stats-cards {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   .charts-section {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   .stat-card,
   .chart-card {
     padding: 20px;
   }
-  
+
   .page-title {
     font-size: 28px;
   }
-  
+
   .stat-value {
     font-size: 32px;
   }
@@ -611,20 +611,20 @@ onMounted(async () => {
   .statistics-page {
     padding: 12px;
   }
-  
+
   .stat-card,
   .chart-card {
     padding: 16px;
   }
-  
+
   .page-title {
     font-size: 24px;
   }
-  
+
   .stat-value {
     font-size: 28px;
   }
-  
+
   .chart-container {
     height: 250px;
   }
