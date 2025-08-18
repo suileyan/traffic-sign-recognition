@@ -124,46 +124,62 @@
       <!-- 参数配置 - 右上角 -->
       <div class="absolute top-0 right-0 z-10">
         <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm w-72">
-          <h4 class="text-sm font-medium text-gray-800 mb-3">检测参数</h4>
-          <div class="space-y-3">
-            <!-- 置信度阈值 -->
-            <div>
-              <label class="block text-xs text-gray-600 mb-1">置信度阈值</label>
-              <input type="range" min="0" max="1" step="0.1" v-model.number="confidenceThreshold" 
-                     class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer slider" />
-              <div class="text-center text-xs text-green-600 font-medium mt-1">{{ confidenceThreshold }}</div>
-            </div>
-            
-            <!-- 帧间隔 -->
-            <div>
-              <label class="block text-xs text-gray-600 mb-1">帧间隔</label>
-              <input type="range" min="1" max="30" step="1" v-model.number="frameInterval" 
-                     class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer slider" />
-              <div class="text-center text-xs text-green-600 font-medium mt-1">每{{ frameInterval }}帧检测一次</div>
-            </div>
-            
-            <!-- 最大时长 -->
-            <div>
-              <label class="block text-xs text-gray-600 mb-1">最大处理时长</label>
-              <input type="range" min="10" max="300" step="10" v-model.number="maxDuration" 
-                     class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer slider" />
-              <div class="text-center text-xs text-green-600 font-medium mt-1">{{ maxDuration }}秒</div>
-            </div>
-            
-            <!-- 复选框选项 -->
-            <div class="space-y-2">
-              <label class="flex items-center text-xs text-gray-600 cursor-pointer">
-                <input type="checkbox" v-model="saveResult" 
-                       class="w-3 h-3 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-1 mr-2" />
-                保存检测结果
-              </label>
-              <label class="flex items-center text-xs text-gray-600 cursor-pointer">
-                <input type="checkbox" v-model="returnVideo" 
-                       class="w-3 h-3 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-1 mr-2" />
-                返回检测视频
-              </label>
-            </div>
+          <div 
+            class="flex items-center justify-between mb-2 cursor-pointer select-none"
+            @click="toggleVideoConfig"
+            role="button"
+            :aria-expanded="showVideoConfig"
+          >
+            <h4 class="text-sm font-medium text-gray-800">检测参数</h4>
+            <svg 
+              class="w-4 h-4 text-gray-500 transition-transform duration-300"
+              :class="showVideoConfig ? 'transform rotate-180' : 'transform rotate-0'"
+              viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+            >
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.25 8.29a.75.75 0 01-.02-1.08z" clip-rule="evenodd" />
+            </svg>
           </div>
+          <transition name="config-panel">
+            <div v-show="showVideoConfig" class="space-y-3">
+              <!-- 置信度阈值 -->
+              <div>
+                <label class="block text-xs text-gray-600 mb-1">置信度阈值</label>
+                <input type="range" min="0" max="1" step="0.1" v-model.number="confidenceThreshold" 
+                       class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer slider" />
+                <div class="text-center text-xs text-green-600 font-medium mt-1">{{ confidenceThreshold }}</div>
+              </div>
+              
+              <!-- 帧间隔 -->
+              <div>
+                <label class="block text-xs text-gray-600 mb-1">帧间隔</label>
+                <input type="range" min="1" max="30" step="1" v-model.number="frameInterval" 
+                       class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer slider" />
+                <div class="text-center text-xs text-green-600 font-medium mt-1">每{{ frameInterval }}帧检测一次</div>
+              </div>
+              
+              <!-- 最大时长 -->
+              <div>
+                <label class="block text-xs text-gray-600 mb-1">最大处理时长</label>
+                <input type="range" min="10" max="300" step="10" v-model.number="maxDuration" 
+                       class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer slider" />
+                <div class="text-center text-xs text-green-600 font-medium mt-1">{{ maxDuration }}秒</div>
+              </div>
+              
+              <!-- 复选框选项 -->
+              <div class="space-y-2">
+                <label class="flex items-center text-xs text-gray-600 cursor-pointer">
+                  <input type="checkbox" v-model="saveResult" 
+                         class="w-3 h-3 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-1 mr-2" />
+                  保存检测结果
+                </label>
+                <label class="flex items-center text-xs text-gray-600 cursor-pointer">
+                  <input type="checkbox" v-model="returnVideo" 
+                         class="w-3 h-3 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-1 mr-2" />
+                  返回检测视频
+                </label>
+              </div>
+            </div>
+          </transition>
         </div>
       </div>
       
@@ -193,7 +209,7 @@
       </div>
       <div class="flex items-center justify-center p-3 bg-green-50 rounded-lg">
         <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L8 12.586l2 2 4-4z" clip-rule="evenodd"></path>
         </svg>
         时间轴标记
       </div>
@@ -220,6 +236,9 @@ const saveResult = ref<boolean>(false)
 const returnVideo = ref<boolean>(true)
 const maxDuration = ref<number>(60)
 const showFrameDetails = ref<boolean>(false)
+// 新增：检测参数折叠
+const showVideoConfig = ref<boolean>(true)
+const toggleVideoConfig = () => { showVideoConfig.value = !showVideoConfig.value }
 
 // 处理文件选择
 const handleFileSelected = async (file: File) => {
@@ -308,4 +327,22 @@ const reset = () => {
 
 <style scoped>
 /* 组件样式 */
+.config-panel-enter-active,
+.config-panel-leave-active {
+  transition: height 0.28s ease, opacity 0.28s ease;
+}
+
+.config-panel-enter-from,
+.config-panel-leave-to {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.config-panel-enter-to,
+.config-panel-leave-from {
+  height: auto;
+  opacity: 1;
+  overflow: hidden;
+}
 </style>
