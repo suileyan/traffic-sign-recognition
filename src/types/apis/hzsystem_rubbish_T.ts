@@ -116,7 +116,6 @@ export interface KnowledgeArticle {
   article_type: string;
   content: string;
   summary: string;
-  cover_image: string | null;
   is_published: boolean;
   view_count: number;
   sort_order: number;
@@ -131,7 +130,6 @@ export interface CreateKnowledgeArticleRequest {
   article_type: string;
   content: string;
   summary: string;
-  cover_image?: string;
   is_published: boolean;
   sort_order: number;
 }
@@ -141,7 +139,6 @@ export interface UpdateKnowledgeArticleRequest {
   article_type: string;
   content: string;
   summary: string;
-  cover_image?: string;
   is_published: boolean;
   sort_order: number;
 }

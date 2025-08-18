@@ -15,6 +15,8 @@ import type {
   UserStatisticsResponse,
   SystemStatisticsOverviewResponse,
   UserDetailedStatisticsResponse,
+  KnowledgeArticleListResponse,
+  KnowledgeArticleResponse,
   ApiResponse,
   // 请求类型
   CreateTrafficCategoryRequest,
@@ -34,6 +36,9 @@ import type {
   TrafficUserQueryParams,
   CreateUserStatisticsRequest,
   UserStatisticsQueryParams,
+  CreateKnowledgeArticleRequest,
+  UpdateKnowledgeArticleRequest,
+  KnowledgeArticleQueryParams,
   SystemStatisticsOverview,
 } from "@/types/apis/hzsystem_traffic_T";
 import serviceAxios from '@/http'
@@ -403,5 +408,73 @@ export function getUserDetailedStatisticsAPI(userId: number): Promise<UserDetail
   return serviceAxios({
     url: `/api/traffic/statistics/user/${userId}/`,
     method: 'get'
+  })
+}
+
+// ==================== 1.8 知识文章管理 ====================
+
+/**
+ * 获取知识文章列表
+ */
+export function getKnowledgeArticlesAPI(params?: KnowledgeArticleQueryParams): Promise<KnowledgeArticleListResponse> {
+  return serviceAxios({
+    url: '/api/traffic/knowledge/',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 创建新的知识文章
+ */
+export function createKnowledgeArticleAPI(data: CreateKnowledgeArticleRequest | FormData): Promise<KnowledgeArticleResponse> {
+  return serviceAxios({
+    url: '/api/traffic/knowledge/',
+    method: 'post',
+    data,
+    headers: data instanceof FormData ? { 'Content-Type': 'multipart/form-data' } : undefined
+  })
+}
+
+/**
+ * 获取指定知识文章详情
+ */
+export function getKnowledgeArticleAPI(id: number): Promise<KnowledgeArticleResponse> {
+  return serviceAxios({
+    url: `/api/traffic/knowledge/${id}/`,
+    method: 'get'
+  })
+}
+
+/**
+ * 更新指定知识文章
+ */
+export function updateKnowledgeArticleAPI(id: number, data: UpdateKnowledgeArticleRequest | FormData): Promise<KnowledgeArticleResponse> {
+  return serviceAxios({
+    url: `/api/traffic/knowledge/${id}/`,
+    method: 'put',
+    data,
+    headers: data instanceof FormData ? { 'Content-Type': 'multipart/form-data' } : undefined
+  })
+}
+
+/**
+ * 部分更新知识文章
+ */
+export function patchKnowledgeArticleAPI(id: number, data: Partial<UpdateKnowledgeArticleRequest>): Promise<KnowledgeArticleResponse> {
+  return serviceAxios({
+    url: `/api/traffic/knowledge/${id}/`,
+    method: 'patch',
+    data
+  })
+}
+
+/**
+ * 删除指定知识文章
+ */
+export function deleteKnowledgeArticleAPI(id: number): Promise<ApiResponse> {
+  return serviceAxios({
+    url: `/api/traffic/knowledge/${id}/`,
+    method: 'delete'
   })
 }
