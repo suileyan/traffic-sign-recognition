@@ -384,23 +384,22 @@
 
 ```json
 {
-    "code": 200,
-    "message": "获取记录列表成功",
-    "data": {
-        "count": 100,
-        "next": "http://localhost:8000/api/traffic/records/?page=2",
-        "previous": null,
-        "results": [
-            {
-                "id": 1,
-                "user_name": "admin",
-                "detection_type_display": "图片检测",
-                "status_display": "已完成",
-                "processing_time": 1.25,
-                "created_at": "2024-01-01T00:00:00Z"
-            }
-        ]
-    }
+	"count": 98,
+	"next": "http://192.168.124.3:8003/api/traffic/records/?page=2",
+	"previous": null,
+	"results": {
+		"code": 200,
+		"message": "获取成功",
+		"data": [
+			{
+				"id": 99,
+				"detection_type_display": "实时检测",
+				"status_display": "completed",
+				"processing_time": 0,
+				"created_at": "2025-08-15T20:25:41.603630"
+			},
+		]
+	}
 }
 ```
 
