@@ -17,7 +17,7 @@
         <div class="flex flex-wrap gap-4 items-end">
           <div class="flex-1 min-w-40">
             <label class="block text-sm text-gray-600 mb-1">检测类型</label>
-            <select v-model="filters.type" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+            <select v-model="filters.detection_type" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
               <option value="">全部类型</option>
               <option value="image">图片检测</option>
               <option value="video">视频检测</option>
@@ -25,22 +25,22 @@
             </select>
           </div>
           <div class="flex-1 min-w-40">
-            <label class="block text-sm text-gray-600 mb-1">识别结果</label>
-            <select v-model="filters.result" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
-              <option value="">全部结果</option>
-              <option value="停车标志">停车标志</option>
-              <option value="限速标志">限速标志</option>
-              <option value="禁止通行">禁止通行</option>
-              <option value="让行标志">让行标志</option>
+            <label class="block text-sm text-gray-600 mb-1">检测状态</label>
+            <select v-model="filters.status" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+              <option value="">全部状态</option>
+              <option value="pending">待处理</option>
+              <option value="processing">处理中</option>
+              <option value="completed">已完成</option>
+              <option value="failed">失败</option>
             </select>
           </div>
           <div class="flex-1 min-w-36">
             <label class="block text-sm text-gray-600 mb-1">开始日期</label>
-            <input v-model="filters.startDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+            <input v-model="filters.start_date" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
           </div>
           <div class="flex-1 min-w-36">
             <label class="block text-sm text-gray-600 mb-1">结束日期</label>
-            <input v-model="filters.endDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+            <input v-model="filters.end_date" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
           </div>
           <div class="flex gap-2">
             <button @click="resetFilters" class="px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors text-sm">
@@ -64,7 +64,7 @@
             <!-- 图片区域 -->
             <div class="flex-shrink-0">
               <div class="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
-                <img v-if="record.image" :src="record.image" :alt="record.result" class="w-full h-full object-cover">
+                <img v-if="record.result_image" :src="record.result_image" :alt="record.status_display" class="w-full h-full object-cover">
                 <div v-else class="w-full h-full flex items-center justify-center">
                   <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -76,7 +76,10 @@
             <!-- 内容区域 -->
             <div class="flex-1 min-w-0">
               <div class="flex justify-between items-start mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">{{ record.result }}</h3>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">{{ record.detection_type_display }}</h3>
+                  <p class="text-sm text-gray-600">状态: {{ record.status_display }}</p>
+                </div>
                 <div class="flex gap-2 ml-4">
                   <button @click="viewDetail(record)" class="px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
                     详情
@@ -93,27 +96,27 @@
                   <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                  {{ record.detectTime }}
+                  {{ new Date(record.created_at).toLocaleString() }}
                 </div>
                 <div class="flex items-center text-sm text-gray-600">
                   <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 110 2h-1v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6H3a1 1 0 110-2h4z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                   </svg>
-                  {{ getTypeText(record.type) }}
+                  处理时间: {{ record.processing_time.toFixed(2) }}s
                 </div>
               </div>
               
               <!-- 置信度进度条 -->
-              <div class="space-y-2">
+              <div v-if="record.confidence" class="space-y-2">
                 <div class="flex justify-between items-center">
                   <span class="text-sm font-medium text-gray-700">置信度</span>
-                  <span class="text-sm font-semibold" :class="getConfidenceTextColor(record.confidence)">{{ record.confidence }}%</span>
+                  <span class="text-sm font-semibold" :class="getConfidenceTextColor(record.confidence * 100)">{{ (record.confidence * 100).toFixed(1) }}%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2.5">
                   <div 
                     class="h-2.5 rounded-full transition-all duration-300 ease-in-out" 
-                    :class="getConfidenceBarColor(record.confidence)"
-                    :style="{ width: record.confidence + '%' }"
+                    :class="getConfidenceBarColor(record.confidence * 100)"
+                    :style="{ width: (record.confidence * 100) + '%' }"
                   ></div>
                 </div>
               </div>
@@ -161,10 +164,10 @@
               <template v-for="page in visiblePages" :key="page">
                 <button 
                   v-if="page !== '...'"
-                  @click="currentPage = page" 
+                  @click="currentPage = Number(page)" 
                   :class="[
                     'px-3 py-1 text-sm border rounded-md',
-                    currentPage === page 
+                    currentPage === Number(page) 
                       ? 'bg-blue-600 text-white border-blue-600' 
                       : 'border-gray-300 hover:bg-gray-50'
                   ]"
@@ -207,214 +210,127 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
+<script setup lang="ts">
+import { ref, computed, onMounted, watch } from 'vue'
+import { getDetectionRecordsAPI } from '@/api/hzsystem_traffic/hzsystem_traffic'
+import type { DetectionRecord, DetectionRecordQueryParams } from '@/types/apis/hzsystem_traffic_T'
 
 // 筛选条件
 const filters = ref({
-  type: '',
-  result: '',
-  startDate: '',
-  endDate: ''
+  detection_type: '',
+  status: '',
+  start_date: '',
+  end_date: ''
 })
 
 // 分页相关
 const currentPage = ref(1)
 const pageSize = ref(10)
 
-// 模拟数据
-const records = ref([
-  {
-    id: 1,
-    title: '停车标志检测',
-    detectTime: '2024-01-15 14:30:25',
-    type: 'image',
-    result: '停车标志',
-    confidence: 96.8,
-    image: 'https://via.placeholder.com/96x96/ef4444/ffffff?text=STOP'
-  },
-  {
-    id: 2,
-    title: '限速标志检测',
-    detectTime: '2024-01-15 13:15:42',
-    type: 'video',
-    result: '限速60标志',
-    confidence: 94.2,
-    image: 'https://via.placeholder.com/96x96/3b82f6/ffffff?text=60'
-  },
-  {
-    id: 3,
-    title: '禁止通行标志检测',
-    detectTime: '2024-01-14 16:22:18',
-    type: 'realtime',
-    result: '禁止通行',
-    confidence: 98.5,
-    image: 'https://via.placeholder.com/96x96/dc2626/ffffff?text=X'
-  },
-  {
-    id: 4,
-    title: '让行标志检测',
-    detectTime: '2024-01-14 10:45:33',
-    type: 'image',
-    result: '让行标志',
-    confidence: 82.1,
-    image: 'https://via.placeholder.com/96x96/f59e0b/ffffff?text=YIELD'
-  },
-  {
-    id: 5,
-    title: '危险标志检测',
-    detectTime: '2024-01-13 09:20:15',
-    type: 'image',
-    result: '危险警告',
-    confidence: 67.3,
-    image: 'https://via.placeholder.com/96x96/f97316/ffffff?text=!'
-  },
-  {
-    id: 6,
-    title: '直行标志检测',
-    detectTime: '2024-01-12 15:30:45',
-    type: 'image',
-    result: '直行标志',
-    confidence: 91.5,
-    image: 'https://via.placeholder.com/96x96/10b981/ffffff?text=↑'
-  },
-  {
-    id: 7,
-    title: '左转标志检测',
-    detectTime: '2024-01-12 11:20:30',
-    type: 'video',
-    result: '左转标志',
-    confidence: 88.7,
-    image: 'https://via.placeholder.com/96x96/8b5cf6/ffffff?text=←'
-  },
-  {
-    id: 8,
-    title: '右转标志检测',
-    detectTime: '2024-01-11 16:45:12',
-    type: 'realtime',
-    result: '右转标志',
-    confidence: 93.2,
-    image: 'https://via.placeholder.com/96x96/06b6d4/ffffff?text=→'
-  },
-  {
-    id: 9,
-    title: '禁止左转标志检测',
-    detectTime: '2024-01-11 14:15:28',
-    type: 'image',
-    result: '禁止左转',
-    confidence: 85.9,
-    image: 'https://via.placeholder.com/96x96/ef4444/ffffff?text=⊘←'
-  },
-  {
-    id: 10,
-    title: '限速40标志检测',
-    detectTime: '2024-01-10 10:30:55',
-    type: 'video',
-    result: '限速40标志',
-    confidence: 92.4,
-    image: 'https://via.placeholder.com/96x96/3b82f6/ffffff?text=40'
-  },
-  {
-    id: 11,
-    title: '人行横道标志检测',
-    detectTime: '2024-01-10 08:45:33',
-    type: 'image',
-    result: '人行横道',
-    confidence: 89.6,
-    image: 'https://via.placeholder.com/96x96/059669/ffffff?text=🚶'
-  },
-  {
-    id: 12,
-    title: '学校区域标志检测',
-    detectTime: '2024-01-09 16:20:18',
-    type: 'realtime',
-    result: '学校区域',
-    confidence: 95.1,
-    image: 'https://via.placeholder.com/96x96/f59e0b/ffffff?text=🏫'
-  },
-  {
-    id: 13,
-    title: '施工标志检测',
-    detectTime: '2024-01-09 13:55:42',
-    type: 'image',
-    result: '施工标志',
-    confidence: 78.3,
-    image: 'https://via.placeholder.com/96x96/f97316/ffffff?text=🚧'
-  },
-  {
-    id: 14,
-    title: '禁止鸣笛标志检测',
-    detectTime: '2024-01-08 12:10:25',
-    type: 'video',
-    result: '禁止鸣笛',
-    confidence: 86.7,
-    image: 'https://via.placeholder.com/96x96/dc2626/ffffff?text=🔇'
-  },
-  {
-    id: 15,
-    title: '环岛标志检测',
-    detectTime: '2024-01-08 09:35:15',
-    type: 'image',
-    result: '环岛标志',
-    confidence: 90.8,
-    image: 'https://via.placeholder.com/96x96/8b5cf6/ffffff?text=⭕'
-  }
-])
+// 数据状态
+const loading = ref(false)
+const records = ref<DetectionRecord[]>([])
+const totalCount = ref(0)
+const nextPage = ref<string | null>(null)
+const previousPage = ref<string | null>(null)
 
-// 获取检测类型文本
-const getTypeText = (type) => {
-  const typeMap = {
-    image: '图片检测',
-    video: '视频检测',
-    realtime: '实时检测'
+// 获取检测记录数据
+const fetchRecords = async () => {
+  try {
+    loading.value = true
+    const params: DetectionRecordQueryParams = {
+      page: currentPage.value,
+      page_size: pageSize.value
+    }
+    
+    // 添加筛选条件
+    if (filters.value.detection_type) {
+      params.detection_type = filters.value.detection_type as any
+    }
+    if (filters.value.status) {
+      params.status = filters.value.status as any
+    }
+    if (filters.value.start_date) {
+      params.start_date = filters.value.start_date
+    }
+    if (filters.value.end_date) {
+      params.end_date = filters.value.end_date
+    }
+    
+    const response = await getDetectionRecordsAPI(params)
+    console.log('获取检测记录响应:', response)
+    if (response) {
+      const paginatedData = response
+      totalCount.value = paginatedData.count
+      nextPage.value = paginatedData.next
+      previousPage.value = paginatedData.previous
+      records.value = paginatedData.results.data
+    }
+  } catch (error) {
+    console.error('获取检测记录失败:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+// 获取类型文本
+const getTypeText = (type: string) => {
+  const typeMap: Record<string, string> = {
+    'image': '图片检测',
+    'video': '视频检测',
+    'realtime': '实时检测'
   }
   return typeMap[type] || type
 }
 
-// 筛选后的记录
-const filteredRecords = computed(() => {
-  return records.value.filter(record => {
-    // 类型筛选
-    if (filters.value.type && record.type !== filters.value.type) {
-      return false
-    }
-    
-    // 结果筛选
-    if (filters.value.result && !record.result.includes(filters.value.result)) {
-      return false
-    }
-    
-    // 日期筛选
-    if (filters.value.startDate) {
-      const recordDate = new Date(record.detectTime.split(' ')[0])
-      const startDate = new Date(filters.value.startDate)
-      if (recordDate < startDate) {
-        return false
-      }
-    }
-    
-    if (filters.value.endDate) {
-      const recordDate = new Date(record.detectTime.split(' ')[0])
-      const endDate = new Date(filters.value.endDate)
-      if (recordDate > endDate) {
-        return false
-      }
-    }
-    
-    return true
-  })
+// 组件挂载时获取数据
+onMounted(() => {
+  fetchRecords()
 })
+
+// 监听筛选条件变化
+watch([() => filters.value.detection_type, () => filters.value.status, () => filters.value.start_date, () => filters.value.end_date], () => {
+  currentPage.value = 1
+  fetchRecords()
+}, { deep: true })
 
 // 总页数
 const totalPages = computed(() => {
-  return Math.ceil(filteredRecords.value.length / pageSize.value)
+  return Math.ceil(totalCount.value / pageSize.value)
 })
 
-// 当前页的记录
+// 当前页的记录（直接使用API返回的数据）
 const paginatedRecords = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  return filteredRecords.value.slice(start, end)
+  return records.value
+})
+
+// 筛选后的记录（API已处理筛选，直接返回records）
+const filteredRecords = computed(() => {
+  return records.value
+})
+
+// 分页函数
+const goToPage = (page: number) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
+  }
+}
+
+const goToNextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+  }
+}
+
+// 监听页码和页面大小变化
+watch([currentPage, pageSize], () => {
+  fetchRecords()
 })
 
 // 可见的页码
@@ -462,10 +378,10 @@ const visiblePages = computed(() => {
 // 重置筛选条件
 const resetFilters = () => {
   filters.value = {
-    type: '',
-    result: '',
-    startDate: '',
-    endDate: ''
+    detection_type: '',
+    status: '',
+    start_date: '',
+    end_date: ''
   }
   currentPage.value = 1
 }

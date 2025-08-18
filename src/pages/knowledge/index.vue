@@ -189,13 +189,13 @@ async function loadData() {
     }
     
     const response = await getTrafficSignsAPI(params)
-    
-    if (response.code === 200 || response.code === 0) {
-      trafficSigns.value = response.data || []
+    console.log('获取交通标志数据响应:', response)
+    if (response && response.data && Array.isArray(response.data)) {
+      trafficSigns.value = response.data
       updateAvailableShapes()
       applyFilters()
     } else {
-      throw new Error(response.message || '获取数据失败')
+      throw new Error('API 返回数据格式错误')
     }
   } catch (err: any) {
     console.error('加载交通标志数据失败:', err)
