@@ -1,1274 +1,1278 @@
 {
-  "id": 75,
-  "user_name": "admin1",
-  "detection_type_display": "视频检测",
-  "status_display": "成功",
-  "file_size_mb": 0,
-  "detection_type": "video",
-  "original_file": "/media/uploads/videos/detection_db1e5231eff8486f9441c6d878dd2a41.mp4",
-  "result_image": null,
-  "status": "success",
-  "processing_time": 12.019687175750732,
-  "file_size": 0,
-  "user_feedback": "",
-  "detection_data": {
-    "success": true,
-    "frame_detections": [
-      {
-        "frame_index": 0,
-        "timestamp": 0,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9089827537536621,
-            "bbox": [
-              129,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8663290739059448,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 5,
-        "timestamp": 0.11863152709359606,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9092572927474976,
-            "bbox": [
-              129,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8664748072624207,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 10,
-        "timestamp": 0.23726305418719212,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9089867472648621,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8660109639167786,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 15,
-        "timestamp": 0.35589458128078816,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9095413684844971,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661157488822937,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 20,
-        "timestamp": 0.47452610837438425,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9093919396400452,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8657084107398987,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 25,
-        "timestamp": 0.5931576354679803,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9087913632392883,
-            "bbox": [
-              129,
-              614,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8657926917076111,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 30,
-        "timestamp": 0.7117891625615763,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9097771048545837,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8658843636512756,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 35,
-        "timestamp": 0.8304206896551724,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9092026352882385,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.865841805934906,
-            "bbox": [
-              147,
-              825,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 40,
-        "timestamp": 0.9490522167487685,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096891283988953,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.866161048412323,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 45,
-        "timestamp": 1.0676837438423645,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9092667698860168,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661016821861267,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 50,
-        "timestamp": 1.1863152709359606,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096712470054626,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661704659461975,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 55,
-        "timestamp": 1.3049467980295566,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9091904759407043,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8658576607704163,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 60,
-        "timestamp": 1.4235783251231526,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096858501434326,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661738634109497,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 65,
-        "timestamp": 1.5422098522167487,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9092652797698975,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661009669303894,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 70,
-        "timestamp": 1.6608413793103447,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096674919128418,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661385178565979,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 75,
-        "timestamp": 1.7794729064039407,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9091949462890625,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8658936619758606,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 80,
-        "timestamp": 1.898104433497537,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096840620040894,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661238551139832,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 85,
-        "timestamp": 2.016735960591133,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9092686772346497,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661512136459351,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 90,
-        "timestamp": 2.135367487684729,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096353650093079,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661026954650879,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 95,
-        "timestamp": 2.253999014778325,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9091758131980896,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8658596873283386,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 100,
-        "timestamp": 2.372630541871921,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096882343292236,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661497831344604,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 105,
-        "timestamp": 2.491262068965517,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9092639088630676,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661550879478455,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 110,
-        "timestamp": 2.609893596059113,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9096742868423462,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8661395311355591,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 115,
-        "timestamp": 2.7285251231527092,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9092029929161072,
-            "bbox": [
-              129,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.865871012210846,
-            "bbox": [
-              147,
-              824,
-              108,
-              113
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 120,
-        "timestamp": 2.8471566502463053,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9107702970504761,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8651281595230103,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 125,
-        "timestamp": 2.9657881773399013,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9103504419326782,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8652905821800232,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 130,
-        "timestamp": 3.0844197044334973,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9103018045425415,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8651811480522156,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 135,
-        "timestamp": 3.2030512315270934,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9102940559387207,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8651801943778992,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 140,
-        "timestamp": 3.3216827586206894,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9103032350540161,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8655301928520203,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 145,
-        "timestamp": 3.4403142857142854,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.910353422164917,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8654112815856934,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 150,
-        "timestamp": 3.5589458128078815,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9103004336357117,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8655014634132385,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 155,
-        "timestamp": 3.6775773399014775,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.910290002822876,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.865165114402771,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 160,
-        "timestamp": 3.796208866995074,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9103035926818848,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8653296828269958,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 165,
-        "timestamp": 3.91484039408867,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9103353023529053,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8653854727745056,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 170,
-        "timestamp": 4.033471921182266,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9102994799613953,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8653196692466736,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 175,
-        "timestamp": 4.152103448275862,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9102731943130493,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8652272820472717,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 180,
-        "timestamp": 4.270734975369458,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9102846384048462,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8653295040130615,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 185,
-        "timestamp": 4.389366502463054,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9103119373321533,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8657125234603882,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 190,
-        "timestamp": 4.50799802955665,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9102783203125,
-            "bbox": [
-              128,
-              615,
-              255,
-              213
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8653393387794495,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 195,
-        "timestamp": 4.626629556650246,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9102634191513062,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.865459144115448,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      },
-      {
-        "frame_index": 200,
-        "timestamp": 4.745261083743842,
-        "detections": [
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.9102779030799866,
-            "bbox": [
-              128,
-              615,
-              255,
-              212
-            ],
-            "class_id": 2
-          },
-          {
-            "sign_name": "mandatory",
-            "category": "其他标志",
-            "confidence": 0.8653268814086914,
-            "bbox": [
-              147,
-              825,
-              108,
-              112
-            ],
-            "class_id": 2
-          }
-        ]
-      }
-    ],
-    "summary": {
-      "total_frames": 203,
-      "processed_frames": 41,
-      "total_detections": 82,
-      "unique_signs": [
-        "mandatory"
+  "code": 200,
+  "message": "获取成功",
+  "data": {
+    "id": 79,
+    "user_name": "admin1",
+    "detection_type_display": "视频检测",
+    "status_display": "成功",
+    "file_size_mb": 0,
+    "detection_type": "video",
+    "original_file": "/media/uploads/videos/detection_e8302bfe930140d8ba98bc19aec5b925.mp4",
+    "result_image": null,
+    "status": "success",
+    "processing_time": 13.353214740753174,
+    "file_size": 0,
+    "user_feedback": "",
+    "detection_data": {
+      "success": true,
+      "frame_detections": [
+        {
+          "frame_index": 0,
+          "timestamp": 0,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9089827537536621,
+              "bbox": [
+                129,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8663290739059448,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 5,
+          "timestamp": 0.11863152709359606,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9092572927474976,
+              "bbox": [
+                129,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8664748072624207,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 10,
+          "timestamp": 0.23726305418719212,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9089867472648621,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8660109639167786,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 15,
+          "timestamp": 0.35589458128078816,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9095413684844971,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661157488822937,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 20,
+          "timestamp": 0.47452610837438425,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9093919396400452,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8657084107398987,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 25,
+          "timestamp": 0.5931576354679803,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9087913632392883,
+              "bbox": [
+                129,
+                614,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8657926917076111,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 30,
+          "timestamp": 0.7117891625615763,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9097771048545837,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8658843636512756,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 35,
+          "timestamp": 0.8304206896551724,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9092026352882385,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.865841805934906,
+              "bbox": [
+                147,
+                825,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 40,
+          "timestamp": 0.9490522167487685,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096891283988953,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.866161048412323,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 45,
+          "timestamp": 1.0676837438423645,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9092667698860168,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661016821861267,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 50,
+          "timestamp": 1.1863152709359606,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096712470054626,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661704659461975,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 55,
+          "timestamp": 1.3049467980295566,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9091904759407043,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8658576607704163,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 60,
+          "timestamp": 1.4235783251231526,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096858501434326,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661738634109497,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 65,
+          "timestamp": 1.5422098522167487,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9092652797698975,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661009669303894,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 70,
+          "timestamp": 1.6608413793103447,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096674919128418,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661385178565979,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 75,
+          "timestamp": 1.7794729064039407,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9091949462890625,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8658936619758606,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 80,
+          "timestamp": 1.898104433497537,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096840620040894,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661238551139832,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 85,
+          "timestamp": 2.016735960591133,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9092686772346497,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661512136459351,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 90,
+          "timestamp": 2.135367487684729,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096353650093079,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661026954650879,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 95,
+          "timestamp": 2.253999014778325,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9091758131980896,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8658596873283386,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 100,
+          "timestamp": 2.372630541871921,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096882343292236,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661497831344604,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 105,
+          "timestamp": 2.491262068965517,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9092639088630676,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661550879478455,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 110,
+          "timestamp": 2.609893596059113,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9096742868423462,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8661395311355591,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 115,
+          "timestamp": 2.7285251231527092,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9092029929161072,
+              "bbox": [
+                129,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.865871012210846,
+              "bbox": [
+                147,
+                824,
+                108,
+                113
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 120,
+          "timestamp": 2.8471566502463053,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9107702970504761,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8651281595230103,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 125,
+          "timestamp": 2.9657881773399013,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9103504419326782,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8652905821800232,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 130,
+          "timestamp": 3.0844197044334973,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9103018045425415,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8651811480522156,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 135,
+          "timestamp": 3.2030512315270934,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9102940559387207,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8651801943778992,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 140,
+          "timestamp": 3.3216827586206894,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9103032350540161,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8655301928520203,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 145,
+          "timestamp": 3.4403142857142854,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.910353422164917,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8654112815856934,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 150,
+          "timestamp": 3.5589458128078815,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9103004336357117,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8655014634132385,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 155,
+          "timestamp": 3.6775773399014775,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.910290002822876,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.865165114402771,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 160,
+          "timestamp": 3.796208866995074,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9103035926818848,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8653296828269958,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 165,
+          "timestamp": 3.91484039408867,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9103353023529053,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8653854727745056,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 170,
+          "timestamp": 4.033471921182266,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9102994799613953,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8653196692466736,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 175,
+          "timestamp": 4.152103448275862,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9102731943130493,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8652272820472717,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 180,
+          "timestamp": 4.270734975369458,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9102846384048462,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8653295040130615,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 185,
+          "timestamp": 4.389366502463054,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9103119373321533,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8657125234603882,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 190,
+          "timestamp": 4.50799802955665,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9102783203125,
+              "bbox": [
+                128,
+                615,
+                255,
+                213
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8653393387794495,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 195,
+          "timestamp": 4.626629556650246,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9102634191513062,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.865459144115448,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        },
+        {
+          "frame_index": 200,
+          "timestamp": 4.745261083743842,
+          "detections": [
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.9102779030799866,
+              "bbox": [
+                128,
+                615,
+                255,
+                212
+              ],
+              "class_id": 2
+            },
+            {
+              "sign_name": "mandatory",
+              "category": "其他标志",
+              "confidence": 0.8653268814086914,
+              "bbox": [
+                147,
+                825,
+                108,
+                112
+              ],
+              "class_id": 2
+            }
+          ]
+        }
       ],
-      "unique_categories": [
-        "其他标志"
-      ],
-      "video_duration": 4.81644,
-      "fps": 42.1473121226466
+      "summary": {
+        "total_frames": 203,
+        "processed_frames": 41,
+        "total_detections": 82,
+        "unique_signs": [
+          "mandatory"
+        ],
+        "unique_categories": [
+          "其他标志"
+        ],
+        "video_duration": 4.81644,
+        "fps": 42.1473121226466
+      },
+      "processing_time": 13.353214740753174,
+      "model_info": {
+        "device": "cpu",
+        "confidence_threshold": 0.5,
+        "iou_threshold": 0.45,
+        "frame_skip": 5
+      },
+      "result_video_path": "C:\\2025.8\\project\\traffic signal\\media\\detection_results\\result_d06fb25660e7499f83350b6d67f01e04.mp4",
+      "result_video_url": "/media/detection_results/result_d06fb25660e7499f83350b6d67f01e04.mp4"
     },
-    "processing_time": 12.019687175750732,
-    "model_info": {
-      "device": "cpu",
-      "confidence_threshold": 0.5,
-      "iou_threshold": 0.45,
-      "frame_skip": 5
-    },
-    "result_video_path": "C:\\2025.8\\project\\traffic signal\\media\\detection_results\\result_0d714188b3df4effa2d071f52d59a85c.mp4",
-    "result_video_url": "/media/detection_results/result_0d714188b3df4effa2d071f52d59a85c.mp4"
-  },
-  "created_at": "2025-08-15T19:03:01.517529",
-  "user": 6,
-  "detected_signs": []
+    "created_at": "2025-08-15T19:12:02.248412",
+    "user": 6,
+    "detected_signs": []
+  }
 }

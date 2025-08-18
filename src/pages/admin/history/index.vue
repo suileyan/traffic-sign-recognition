@@ -174,7 +174,7 @@ const handleViewDetail = async (row: DetectionRecord) => {
   try {
     detailLoading.value = true;
     detailDialogVisible.value = true;
-    
+
     // 调用API获取详细信息
     const response = await getDetectionRecordAPI(row.id);
     if (response && response.data) {
@@ -410,11 +410,9 @@ const iconVariants = {
 
         <el-table :data="paginatedRecords" v-loading="loading" stripe style="width: 100%"
           :default-sort="{ prop: 'id', order: 'ascending' }">
-          <el-table-column prop="id" label="ID" width="80" sortable />
+          <el-table-column prop="id" label="ID" min-width="80" sortable />
 
-
-
-          <el-table-column label="检测结果" width="120">
+          <el-table-column label="检测结果" min-width="120">
             <template #default="{ row }">
               <el-image v-if="row.result_image" :src="getImageUrl(row.result_image)"
                 :preview-src-list="[getImageUrl(row.result_image)]" fit="cover"
@@ -423,15 +421,13 @@ const iconVariants = {
             </template>
           </el-table-column>
 
-
-
-          <el-table-column prop="processing_time" label="处理时间" width="100" sortable>
+          <el-table-column prop="processing_time" label="处理时间" min-width="120" sortable>
             <template #default="{ row }">
               {{ formatProcessingTime(row.processing_time) }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="status_display" label="检测状态" width="100">
+          <el-table-column prop="status_display" label="检测状态" min-width="120">
             <template #default="{ row }">
               <el-tag
                 :type="row.status_display === 'completed' || row.status_display === '成功' ? 'success' : row.status_display === 'processing' ? 'warning' : row.status_display === 'failed' ? 'danger' : 'info'">
@@ -475,13 +471,7 @@ const iconVariants = {
     </Motion>
 
     <!-- 详情弹窗 -->
-    <el-dialog
-      v-model="detailDialogVisible"
-      title="检测记录详情"
-      width="80%"
-      :close-on-click-modal="false"
-      destroy-on-close
-    >
+    <el-dialog v-model="detailDialogVisible" title="检测记录详情" width="80%" :close-on-click-modal="false" destroy-on-close>
       <div v-loading="detailLoading" class="detail-content">
         <div v-if="currentRecordDetail" class="space-y-6">
           <!-- 基本信息 -->
@@ -504,11 +494,9 @@ const iconVariants = {
               </div>
               <div class="info-item">
                 <span class="label">检测状态:</span>
-                <el-tag
-                  :type="currentRecordDetail.status_display === 'completed' || currentRecordDetail.status_display === '已完成' ? 'success' : 
-                         currentRecordDetail.status_display === 'processing' ? 'warning' : 
-                         currentRecordDetail.status_display === 'failed' ? 'danger' : 'info'"
-                >
+                <el-tag :type="currentRecordDetail.status_display === 'completed' || currentRecordDetail.status_display === '已完成' ? 'success' :
+                  currentRecordDetail.status_display === 'processing' ? 'warning' :
+                    currentRecordDetail.status_display === 'failed' ? 'danger' : 'info'">
                   {{ currentRecordDetail.status_display }}
                 </el-tag>
               </div>
@@ -522,11 +510,13 @@ const iconVariants = {
               </div>
               <div class="info-item">
                 <span class="label">创建时间:</span>
-                <span class="value">{{ new Date(currentRecordDetail.created_at).toLocaleString('zh-CN') }}</span>
+                <span class="value">{{ currentRecordDetail.created_at ? new
+                  Date(currentRecordDetail.created_at).toLocaleString('zh-CN') : '暂无数据' }}</span>
               </div>
               <div class="info-item">
                 <span class="label">更新时间:</span>
-                <span class="value">{{ new Date(currentRecordDetail.updated_at).toLocaleString('zh-CN') }}</span>
+                <span class="value">{{ currentRecordDetail.updated_at ? new
+                  Date(currentRecordDetail.updated_at).toLocaleString('zh-CN') : '暂无数据' }}</span>
               </div>
             </div>
           </el-card>
@@ -539,38 +529,28 @@ const iconVariants = {
             <div class="grid grid-cols-2 gap-6">
               <div v-if="currentRecordDetail.original_file">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">原始图片</h4>
-                <el-image
-                  :src="getImageUrl(currentRecordDetail.original_file)"
-                  :preview-src-list="[getImageUrl(currentRecordDetail.original_file)]"
-                  fit="cover"
-                  class="w-full h-48 rounded-lg border"
-                  :preview-teleported="true"
-                />
+                <el-image :src="getImageUrl(currentRecordDetail.original_file)"
+                  :preview-src-list="[getImageUrl(currentRecordDetail.original_file)]" fit="cover"
+                  class="w-full h-48 rounded-lg border" :preview-teleported="true" />
               </div>
               <div v-if="currentRecordDetail.result_image">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">检测结果图片</h4>
-                <el-image
-                  :src="getImageUrl(currentRecordDetail.result_image)"
-                  :preview-src-list="[getImageUrl(currentRecordDetail.result_image)]"
-                  fit="cover"
-                  class="w-full h-48 rounded-lg border"
-                  :preview-teleported="true"
-                />
+                <el-image :src="getImageUrl(currentRecordDetail.result_image)"
+                  :preview-src-list="[getImageUrl(currentRecordDetail.result_image)]" fit="cover"
+                  class="w-full h-48 rounded-lg border" :preview-teleported="true" />
               </div>
             </div>
           </el-card>
 
           <!-- 检测结果 -->
-          <el-card v-if="currentRecordDetail.detection_results && currentRecordDetail.detection_results.length > 0" class="info-card">
+          <el-card v-if="currentRecordDetail.detection_results && currentRecordDetail.detection_results.length > 0"
+            class="info-card">
             <template #header>
               <span class="text-lg font-medium">检测结果</span>
             </template>
             <div class="space-y-4">
-              <div
-                v-for="(result, index) in currentRecordDetail.detection_results"
-                :key="index"
-                class="result-item p-4 border rounded-lg bg-gray-50"
-              >
+              <div v-for="(result, index) in currentRecordDetail.detection_results" :key="index"
+                class="result-item p-4 border rounded-lg bg-gray-50">
                 <div class="grid grid-cols-3 gap-4">
                   <div class="info-item">
                     <span class="label">交通标志:</span>
@@ -583,7 +563,8 @@ const iconVariants = {
                   <div class="info-item">
                     <span class="label">置信度:</span>
                     <span class="value">
-                      <el-tag :type="result.confidence >= 0.8 ? 'success' : result.confidence >= 0.6 ? 'warning' : 'danger'">
+                      <el-tag
+                        :type="result.confidence >= 0.8 ? 'success' : result.confidence >= 0.6 ? 'warning' : 'danger'">
                         {{ result.confidence_percent }}
                       </el-tag>
                     </span>
@@ -613,12 +594,13 @@ const iconVariants = {
               <span class="text-lg font-medium">原始检测数据</span>
             </template>
             <el-scrollbar height="200px">
-              <pre class="text-sm text-gray-600 whitespace-pre-wrap">{{ JSON.stringify(currentRecordDetail.detection_data, null, 2) }}</pre>
+              <pre class="text-sm text-gray-600 whitespace-pre-wrap">{{ JSON.stringify(currentRecordDetail.detection_data,
+            null, 2) }}</pre>
             </el-scrollbar>
           </el-card>
         </div>
       </div>
-      
+
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="detailDialogVisible = false">关闭</el-button>
@@ -728,11 +710,11 @@ const iconVariants = {
   border-color: #d1d5db;
 }
 
-.space-y-6 > * + * {
+.space-y-6>*+* {
   margin-top: 1.5rem;
 }
 
-.space-y-4 > * + * {
+.space-y-4>*+* {
   margin-top: 1rem;
 }
 
