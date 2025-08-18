@@ -386,7 +386,6 @@
 {
 	"count": 98,
 	"next": "http://192.168.124.3:8003/api/traffic/records/?page=2",
-	"previous": null,
 	"results": {
 		"code": 200,
 		"message": "获取成功",

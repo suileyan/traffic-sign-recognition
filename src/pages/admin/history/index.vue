@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { Motion } from "motion-v";
 import { ref, onMounted, computed } from 'vue';
-import { ElMessage } from 'element-plus';
-import { View } from '@element-plus/icons-vue';
-import { getDetectionRecordsAPI, getSystemStatisticsOverviewAPI } from '@/api/hzsystem_traffic/hzsystem_traffic';
-import type { DetectionRecord, SystemStatisticsOverview } from '@/types/apis/hzsystem_traffic_T';// 统计概览数据
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { View, Delete } from '@element-plus/icons-vue';
+import { getDetectionRecordsAPI, getSystemStatisticsOverviewAPI, deleteDetectionRecordAPI, getDetectionRecordAPI } from '@/api/hzsystem_traffic/hzsystem_traffic';
+import type { DetectionRecord, SystemStatisticsOverview } from '@/types/apis/hzsystem_traffic_T';
+
+// 详情弹窗相关数据
+const detailDialogVisible = ref(false);
+const currentRecordDetail = ref<any>(null);
+const detailLoading = ref(false);// 统计概览数据
 const statisticsOverview = ref<SystemStatisticsOverview>();
 
 // 检测历史数据（计算属性）- 基于检测记录详情数据
@@ -40,7 +45,7 @@ const historyData = computed(() => {
   const totalDetections = records.length;
 
   // 计算成功检测数（基于status_display）
-  const successfulDetections = records.filter(record => 
+  const successfulDetections = records.filter(record =>
     record.status_display === 'completed' || record.status_display === '成功'
   ).length;
 
@@ -165,10 +170,53 @@ const fetchStatisticsOverview = async () => {
 };
 
 // 查看详情处理函数
-const handleViewDetail = (row: DetectionRecord) => {
-  // TODO: 实现查看详情功能
-  ElMessage.info(`查看记录 ${row.id} 的详情功能待实现`);
-  console.log('查看详情:', row);
+const handleViewDetail = async (row: DetectionRecord) => {
+  try {
+    detailLoading.value = true;
+    detailDialogVisible.value = true;
+    
+    // 调用API获取详细信息
+    const response = await getDetectionRecordAPI(row.id);
+    if (response && response.data) {
+      currentRecordDetail.value = response.data;
+    } else {
+      ElMessage.error('获取详情失败');
+      detailDialogVisible.value = false;
+    }
+  } catch (error) {
+    console.error('获取详情失败:', error);
+    ElMessage.error('获取详情失败，请重试');
+    detailDialogVisible.value = false;
+  } finally {
+    detailLoading.value = false;
+  }
+};
+
+// 删除记录处理函数
+const handleDelete = async (row: DetectionRecord) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要删除ID为 ${row.id} 的检测记录吗？此操作不可撤销。`,
+      '确认删除',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    );
+
+    // 调用删除API
+    await deleteDetectionRecordAPI(row.id);
+
+    // 删除成功后刷新数据
+    ElMessage.success('删除成功');
+    await fetchDetectionRecords();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除记录失败:', error);
+      ElMessage.error('删除失败，请重试');
+    }
+  }
 };
 
 // 页面加载时获取数据
@@ -385,20 +433,20 @@ const iconVariants = {
 
           <el-table-column prop="status_display" label="检测状态" width="100">
             <template #default="{ row }">
-              <el-tag :type="row.status_display === 'completed' || row.status_display === '成功' ? 'success' : row.status_display === 'processing' ? 'warning' : row.status_display === 'failed' ? 'danger' : 'info'">
+              <el-tag
+                :type="row.status_display === 'completed' || row.status_display === '成功' ? 'success' : row.status_display === 'processing' ? 'warning' : row.status_display === 'failed' ? 'danger' : 'info'">
                 {{ row.status_display }}
               </el-tag>
             </template>
           </el-table-column>
 
-          <el-table-column label="操作" width="120" fixed="right">
+          <el-table-column label="操作" width="200" fixed="right">
             <template #default="{ row }">
-              <el-button
-                type="primary"
-                size="small"
-                @click="handleViewDetail(row)"
-                :icon="View">
+              <el-button type="primary" size="small" @click="handleViewDetail(row)" :icon="View">
                 查看详情
+              </el-button>
+              <el-button type="danger" size="small" @click="handleDelete(row)" :icon="Delete" style="margin-left: 8px;">
+                删除
               </el-button>
             </template>
           </el-table-column>
