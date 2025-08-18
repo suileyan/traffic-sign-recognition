@@ -686,4 +686,77 @@ const iconVariants = {
   border-color: #3b82f6;
   transform: scale(1.05);
 }
+
+/* 详情弹窗样式 */
+.detail-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.info-card {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.info-item .label {
+  font-weight: 500;
+  color: #606266;
+  min-width: 100px;
+  margin-right: 12px;
+}
+
+.info-item .value {
+  color: #303133;
+  flex: 1;
+}
+
+.result-item {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.result-item:hover {
+  background-color: #f1f3f4;
+  border-color: #d1d5db;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.dialog-footer {
+  text-align: right;
+}
 </style>
