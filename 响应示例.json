@@ -1,0 +1,172 @@
+{
+	"code": 200,
+	"message": "获取数据集信息成功",
+	"data": {
+		"overview": {
+			"total_folders": 12,
+			"total_images": 12000,
+			"dataset_size": 9639.64,
+			"folder_structure": "Range-based organization",
+			"image_format": "PNG",
+			"avg_images_per_folder": 1000
+		},
+		"folder_stats": [
+			{
+				"folder_name": "00000~00999",
+				"start_range": 0,
+				"end_range": 999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/00000~00999/00000.png",
+					"/static/datasets/00000~00999/00001.png",
+					"/static/datasets/00000~00999/00002.png"
+				]
+			},
+			{
+				"folder_name": "01000~01999",
+				"start_range": 1000,
+				"end_range": 1999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/01000~01999/01000.png",
+					"/static/datasets/01000~01999/01001.png",
+					"/static/datasets/01000~01999/01002.png"
+				]
+			},
+			{
+				"folder_name": "02000~02999",
+				"start_range": 2000,
+				"end_range": 2999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/02000~02999/02000.png",
+					"/static/datasets/02000~02999/02001.png",
+					"/static/datasets/02000~02999/02002.png"
+				]
+			},
+			{
+				"folder_name": "03000~03999",
+				"start_range": 3000,
+				"end_range": 3999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/03000~03999/03000.png",
+					"/static/datasets/03000~03999/03001.png",
+					"/static/datasets/03000~03999/03002.png"
+				]
+			},
+			{
+				"folder_name": "04000~04999",
+				"start_range": 4000,
+				"end_range": 4999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/04000~04999/04000.png",
+					"/static/datasets/04000~04999/04001.png",
+					"/static/datasets/04000~04999/04002.png"
+				]
+			},
+			{
+				"folder_name": "05000~05999",
+				"start_range": 5000,
+				"end_range": 5999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/05000~05999/05000.png",
+					"/static/datasets/05000~05999/05001.png",
+					"/static/datasets/05000~05999/05002.png"
+				]
+			},
+			{
+				"folder_name": "06000~06999",
+				"start_range": 6000,
+				"end_range": 6999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/06000~06999/06000.png",
+					"/static/datasets/06000~06999/06001.png",
+					"/static/datasets/06000~06999/06002.png"
+				]
+			},
+			{
+				"folder_name": "07000~07999",
+				"start_range": 7000,
+				"end_range": 7999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/07000~07999/07000.png",
+					"/static/datasets/07000~07999/07001.png",
+					"/static/datasets/07000~07999/07002.png"
+				]
+			},
+			{
+				"folder_name": "08000~08999",
+				"start_range": 8000,
+				"end_range": 8999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/08000~08999/08000.png",
+					"/static/datasets/08000~08999/08001.png",
+					"/static/datasets/08000~08999/08002.png"
+				]
+			},
+			{
+				"folder_name": "09000~09999",
+				"start_range": 9000,
+				"end_range": 9999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/09000~09999/09000.png",
+					"/static/datasets/09000~09999/09001.png",
+					"/static/datasets/09000~09999/09002.png"
+				]
+			},
+			{
+				"folder_name": "10000~10999",
+				"start_range": 10000,
+				"end_range": 10999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/10000~10999/10000.png",
+					"/static/datasets/10000~10999/10001.png",
+					"/static/datasets/10000~10999/10002.png"
+				]
+			},
+			{
+				"folder_name": "11000~11999",
+				"start_range": 11000,
+				"end_range": 11999,
+				"image_count": 1000,
+				"sample_images": [
+					"/static/datasets/11000~11999/11000.png",
+					"/static/datasets/11000~11999/11001.png",
+					"/static/datasets/11000~11999/11002.png"
+				]
+			}
+		],
+		"sample_images": [
+			"/static/datasets/00000~00999/00000.png",
+			"/static/datasets/00000~00999/00001.png",
+			"/static/datasets/00000~00999/00002.png",
+			"/static/datasets/01000~01999/01000.png",
+			"/static/datasets/01000~01999/01001.png",
+			"/static/datasets/01000~01999/01002.png",
+			"/static/datasets/02000~02999/02000.png",
+			"/static/datasets/02000~02999/02001.png",
+			"/static/datasets/02000~02999/02002.png",
+			"/static/datasets/03000~03999/03000.png",
+			"/static/datasets/03000~03999/03001.png",
+			"/static/datasets/03000~03999/03002.png",
+			"/static/datasets/04000~04999/04000.png",
+			"/static/datasets/04000~04999/04001.png",
+			"/static/datasets/04000~04999/04002.png"
+		],
+		"dataset_info": {
+			"name": "交通标志数据集",
+			"version": "2.0",
+			"description": "按数字范围组织的交通标志数据集",
+			"organization": "Range-based folders (e.g., 00000~00999)",
+			"total_images": 12000
+		}
+	}
+}

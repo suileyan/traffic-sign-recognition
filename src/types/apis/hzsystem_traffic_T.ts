@@ -20,10 +20,8 @@ export interface DatasetInfo {
   name: string
   version: string
   description: string
-  classes: string[]
+  organization: string
   total_images: number
-  train_images: number
-  val_images: number
 }
 
 export interface DatasetStatistics {
@@ -33,8 +31,33 @@ export interface DatasetStatistics {
 }
 
 export interface Dataset {
+  code: number
+  message: string
+  data: Data
+}
+
+export interface Data {
+  overview: Overview
+  folder_stats: FolderStat[]
+  sample_images: string[]
   dataset_info: DatasetInfo
-  statistics: DatasetStatistics
+}
+
+export interface Overview {
+  total_folders: number
+  total_images: number
+  dataset_size: number
+  folder_structure: string
+  image_format: string
+  avg_images_per_folder: number
+}
+
+export interface FolderStat {
+  folder_name: string
+  start_range: number
+  end_range: number
+  image_count: number
+  sample_images: string[]
 }
 
 // 交通标志分类类型

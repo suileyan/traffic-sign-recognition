@@ -11,8 +11,8 @@ import {
 } from "echarts/components";
 import VChart from "vue-echarts";
 import type { EChartsOption } from "echarts";
-import { getDatasetAPI } from '@/api/admin/hzsystem_rubbish';
-import type { DatasetResponse } from '@/types/apis/hzsystem_rubbish_T';
+import { getDatasetAPI } from '@/api/hzsystem_traffic/hzsystem_traffic';
+import type { DatasetResponse } from '@/types/apis/hzsystem_traffic_T';
 import { ref, onMounted, computed } from 'vue';
 import { DataAnalysis, PieChart as PieChartIcon, TrendCharts as BarChartIcon, Picture } from '@element-plus/icons-vue';
 
@@ -57,7 +57,8 @@ const getImageUrl = (imagePath: string): string => {
 const fetchDatasetData = async () => {
   loading.value = true;
   try {
-    datasetData.value = await getDatasetAPI();
+    const response = await getDatasetAPI();
+    datasetData.value = response;
   } catch (error) {
     console.error('获取数据集数据失败:', error);
   } finally {
@@ -105,33 +106,33 @@ const iconVariants = {
 
 // 计算属性
 const overviewStats = computed(() => {
-  if (!datasetData.value) {
+  if (!datasetData.value?.data) {
     return {
-      totalCategories: { value: 0, label: '总类别数' },
+      totalFolders: { value: 0, label: '总文件夹数' },
       totalImages: { value: 0, label: '总图片数' },
-      trainImages: { value: 0, label: '训练图片' },
-      valImages: { value: 0, label: '验证图片' },
+      avgImagesPerFolder: { value: 0, label: '平均每文件夹图片数' },
+      imageFormat: { value: '-', label: '图片格式' },
       datasetSize: { value: '0 MB', label: '数据集大小' }
     };
   }
 
-  const { overview } = datasetData.value;
+  const { overview } = datasetData.value.data;
   return {
-    totalCategories: {
-      value: overview.total_categories,
-      label: '总类别数'
+    totalFolders: {
+      value: overview.total_folders,
+      label: '总文件夹数'
     },
     totalImages: {
       value: overview.total_images,
       label: '总图片数'
     },
-    trainImages: {
-      value: overview.train_images,
-      label: '训练图片'
+    avgImagesPerFolder: {
+      value: overview.avg_images_per_folder,
+      label: '平均每文件夹图片数'
     },
-    valImages: {
-      value: overview.val_images,
-      label: '验证图片'
+    imageFormat: {
+      value: overview.image_format,
+      label: '图片格式'
     },
     datasetSize: {
       value: `${overview.dataset_size.toFixed(1)} MB`,
@@ -141,15 +142,15 @@ const overviewStats = computed(() => {
 });
 
 // 分页相关计算属性
-const paginatedCategories = computed(() => {
-  if (!datasetData.value?.categories) return [];
+const paginatedFolders = computed(() => {
+  if (!datasetData.value?.data?.folder_stats) return [];
   const start = (currentPage.value - 1) * pageSize.value;
   const end = start + pageSize.value;
-  return datasetData.value.categories.slice(start, end);
+  return datasetData.value.data.folder_stats.slice(start, end);
 });
 
-const totalCategories = computed(() => {
-  return datasetData.value?.categories?.length || 0;
+const totalFolders = computed(() => {
+  return datasetData.value?.data?.folder_stats?.length || 0;
 });
 
 // 分页处理函数
@@ -169,11 +170,17 @@ const showMoreImages = (categoryName: string, images: string[]) => {
   imageDialogVisible.value = true;
 };
 
-// 类别分布图表数据
-const categoryDistributionData = computed((): EChartsOption => {
-  if (!datasetData.value?.categories.length) {
+// 查看文件夹详情
+const viewFolderDetails = (folder: any) => {
+  console.log('查看文件夹详情:', folder);
+  // 这里可以添加查看详情的逻辑，比如跳转到详情页面或打开弹窗
+};
+
+// 文件夹分布图表数据
+const folderDistributionData = computed((): EChartsOption => {
+  if (!datasetData.value?.data?.folder_stats?.length) {
     return {
-      title: { text: '类别分布', left: 'center' },
+      title: { text: '文件夹分布', left: 'center' },
       tooltip: { trigger: 'item' },
       series: [{
         type: 'pie',
@@ -190,10 +197,10 @@ const categoryDistributionData = computed((): EChartsOption => {
     };
   }
 
-  const categories = datasetData.value.categories.slice(0, 10); // 显示前10个类别
+  const folders = datasetData.value.data.folder_stats.slice(0, 10); // 显示前10个文件夹
   return {
     title: {
-      text: '类别分布 (前10)',
+      text: '文件夹分布 (前10)',
       left: 'center',
       textStyle: {
         fontSize: 16,
@@ -214,9 +221,9 @@ const categoryDistributionData = computed((): EChartsOption => {
       type: 'pie',
       radius: ['40%', '70%'],
       center: ['60%', '50%'],
-      data: categories.map(cat => ({
-        value: cat.total_count,
-        name: cat.name
+      data: folders.map(folder => ({
+        value: folder.image_count,
+        name: folder.folder_name
       })),
       emphasis: {
         itemStyle: {
@@ -235,11 +242,11 @@ const categoryDistributionData = computed((): EChartsOption => {
   };
 });
 
-// 训练验证数据对比图表
-const trainValComparisonData = computed((): EChartsOption => {
-  if (!datasetData.value?.categories.length) {
+// 文件夹图片数量对比图表
+const folderComparisonData = computed((): EChartsOption => {
+  if (!datasetData.value?.data?.folder_stats?.length) {
     return {
-      title: { text: '训练/验证数据对比', left: 'center' },
+      title: { text: '文件夹图片数量对比', left: 'center' },
       tooltip: { trigger: 'axis' },
       xAxis: { type: 'category', data: [] },
       yAxis: { type: 'value' },
@@ -247,10 +254,10 @@ const trainValComparisonData = computed((): EChartsOption => {
     };
   }
 
-  const categories = datasetData.value.categories.slice(0, 8); // 显示前8个类别
+  const folders = datasetData.value.data.folder_stats.slice(0, 8); // 显示前8个文件夹
   return {
     title: {
-      text: '训练/验证数据对比 (前8)',
+      text: '文件夹图片数量对比 (前8)',
       left: 'center',
       textStyle: {
         fontSize: 16,
@@ -263,10 +270,6 @@ const trainValComparisonData = computed((): EChartsOption => {
         type: 'shadow'
       }
     },
-    legend: {
-      data: ['训练集', '验证集'],
-      top: 30
-    },
     grid: {
       left: '3%',
       right: '4%',
@@ -276,7 +279,7 @@ const trainValComparisonData = computed((): EChartsOption => {
     },
     xAxis: {
       type: 'category',
-      data: categories.map(cat => cat.name),
+      data: folders.map(folder => folder.folder_name),
       axisLabel: {
         rotate: 45,
         interval: 0
@@ -288,19 +291,11 @@ const trainValComparisonData = computed((): EChartsOption => {
     },
     series: [
       {
-        name: '训练集',
+        name: '图片数量',
         type: 'bar',
-        data: categories.map(cat => cat.train_count),
+        data: folders.map(folder => folder.image_count),
         itemStyle: {
           color: '#3b82f6'
-        }
-      },
-      {
-        name: '验证集',
-        type: 'bar',
-        data: categories.map(cat => cat.val_count),
-        itemStyle: {
-          color: '#10b981'
         }
       }
     ]
@@ -351,7 +346,7 @@ const trainValComparisonData = computed((): EChartsOption => {
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-blue-600 text-sm font-medium">
-                  {{ overviewStats.totalCategories.label }}
+                  {{ overviewStats.totalFolders.label }}
                 </p>
                 <Motion
                   :initial="{ opacity: 0, y: 10 }"
@@ -359,7 +354,7 @@ const trainValComparisonData = computed((): EChartsOption => {
                   :transition="{ duration: 0.4, delay: 0.4 }"
                 >
                   <p class="text-2xl font-bold text-blue-900">
-                    {{ overviewStats.totalCategories.value.toLocaleString() }}
+                    {{ overviewStats.totalFolders.value.toLocaleString() }}
                   </p>
                 </Motion>
               </div>
@@ -425,7 +420,7 @@ const trainValComparisonData = computed((): EChartsOption => {
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-purple-600 text-sm font-medium">
-                  {{ overviewStats.trainImages.label }}
+                  {{ overviewStats.avgImagesPerFolder.label }}
                 </p>
                 <Motion
                   :initial="{ opacity: 0, y: 10 }"
@@ -433,7 +428,7 @@ const trainValComparisonData = computed((): EChartsOption => {
                   :transition="{ duration: 0.4, delay: 0.6 }"
                 >
                   <p class="text-2xl font-bold text-purple-900">
-                    {{ overviewStats.trainImages.value.toLocaleString() }}
+                    {{ overviewStats.avgImagesPerFolder.value.toLocaleString() }}
                   </p>
                 </Motion>
               </div>
@@ -462,7 +457,7 @@ const trainValComparisonData = computed((): EChartsOption => {
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-orange-600 text-sm font-medium">
-                  {{ overviewStats.valImages.label }}
+                  {{ overviewStats.imageFormat.label }}
                 </p>
                 <Motion
                   :initial="{ opacity: 0, y: 10 }"
@@ -470,7 +465,7 @@ const trainValComparisonData = computed((): EChartsOption => {
                   :transition="{ duration: 0.4, delay: 0.7 }"
                 >
                   <p class="text-2xl font-bold text-orange-900">
-                    {{ overviewStats.valImages.value.toLocaleString() }}
+                    {{ overviewStats.imageFormat.value }}
                   </p>
                 </Motion>
               </div>
@@ -530,7 +525,7 @@ const trainValComparisonData = computed((): EChartsOption => {
 
     <!-- 图表区域 -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-      <!-- 类别分布饼图 -->
+      <!-- 文件夹分布饼图 -->
       <Motion
         :initial="cardVariants.initial"
         :animate="cardVariants.animate"
@@ -539,7 +534,7 @@ const trainValComparisonData = computed((): EChartsOption => {
       >
         <el-card>
           <template #header>
-            <span class="font-medium">类别分布</span>
+            <span class="font-medium">文件夹分布</span>
           </template>
           <div class="h-80">
             <Motion
@@ -548,13 +543,13 @@ const trainValComparisonData = computed((): EChartsOption => {
               :animate="{ opacity: 1, scale: 1 }"
               :transition="{ duration: 0.5, delay: 0.9 }"
             >
-              <v-chart :option="categoryDistributionData" class="w-full h-full" autoresize />
+              <v-chart :option="folderDistributionData" class="w-full h-full" autoresize />
             </Motion>
           </div>
         </el-card>
       </Motion>
 
-      <!-- 训练验证数据对比 -->
+      <!-- 文件夹图片数量对比 -->
       <Motion
         :initial="cardVariants.initial"
         :animate="cardVariants.animate"
@@ -563,7 +558,7 @@ const trainValComparisonData = computed((): EChartsOption => {
       >
         <el-card>
           <template #header>
-            <span class="font-medium">训练/验证数据对比</span>
+            <span class="font-medium">文件夹图片数量对比</span>
           </template>
           <div class="h-80">
             <Motion
@@ -572,14 +567,14 @@ const trainValComparisonData = computed((): EChartsOption => {
               :animate="{ opacity: 1, scale: 1 }"
               :transition="{ duration: 0.5, delay: 1.0 }"
             >
-              <v-chart :option="trainValComparisonData" class="w-full h-full" autoresize />
+              <v-chart :option="folderComparisonData" class="w-full h-full" autoresize />
             </Motion>
           </div>
         </el-card>
       </Motion>
     </div>
 
-    <!-- 类别详情列表 -->
+    <!-- 文件夹详情列表 -->
     <Motion
       :initial="cardVariants.initial"
       :animate="cardVariants.animate"
@@ -588,20 +583,17 @@ const trainValComparisonData = computed((): EChartsOption => {
     >
       <el-card>
         <template #header>
-          <span class="font-medium">类别详情</span>
+          <span class="font-medium">文件夹详情</span>
         </template>
         
         <el-table 
-          :data="paginatedCategories"
+          :data="paginatedFolders"
           v-loading="loading"
           stripe
           style="width: 100%"
         >
-          <el-table-column prop="id" label="ID" width="80" />
-          <el-table-column prop="name" label="类别名称" min-width="120" />
-          <el-table-column prop="train_count" label="训练图片" width="100" align="center" />
-          <el-table-column prop="val_count" label="验证图片" width="100" align="center" />
-          <el-table-column prop="total_count" label="总计" width="100" align="center" />
+          <el-table-column prop="folder_name" label="文件夹名称" min-width="200" />
+          <el-table-column prop="image_count" label="图片数量" width="120" align="center" />
           <el-table-column label="样本图片" min-width="200">
             <template #default="{ row }">
               <div class="flex gap-2">
@@ -617,7 +609,7 @@ const trainValComparisonData = computed((): EChartsOption => {
                 <span 
                   v-if="row.sample_images.length > 3" 
                   class="text-blue-500 text-sm self-center cursor-pointer hover:text-blue-700 hover:underline"
-                  @click="showMoreImages(row.name, row.sample_images)"
+                  @click="showMoreImages(row.folder_name, row.sample_images)"
                 >
                   +{{ row.sample_images.length - 3 }} 更多
                 </span>
@@ -632,7 +624,7 @@ const trainValComparisonData = computed((): EChartsOption => {
             v-model:current-page="currentPage"
             v-model:page-size="pageSize"
             :page-sizes="[5, 10, 20, 50]"
-            :total="totalCategories"
+            :total="totalFolders"
             layout="total, sizes, prev, pager, next, jumper"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
