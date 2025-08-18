@@ -73,6 +73,8 @@ export default defineConfig(({ command, mode }) => {
         '/api': {
           target: backendUrl,
           changeOrigin: true,
+          timeout: 0, // 禁用代理超时
+          proxyTimeout: 0, // 禁用代理请求超时
           rewrite: (path: string) => path.replace(/^\/api/, ''),
         },
       },
