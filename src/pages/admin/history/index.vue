@@ -162,8 +162,8 @@ const formatProcessingTime = (time: number) => {
 const fetchStatisticsOverview = async () => {
   try {
     const response = await getSystemStatisticsOverviewAPI();
-    if (response.data) {
-      statisticsOverview.value = response.data;
+    if (response) {
+      statisticsOverview.value = response;
     }
   } catch (error) {
     console.error('获取统计概览失败:', error);

@@ -41,7 +41,7 @@ import type {
   KnowledgeArticleQueryParams,
   SystemStatisticsOverview,
 } from "@/types/apis/hzsystem_traffic_T";
-import serviceAxios from '@/http'
+import serviceAxios from "@/http";
 
 // ==================== 1.1 数据集展示接口 ====================
 
@@ -50,9 +50,9 @@ import serviceAxios from '@/http'
  */
 export function getDatasetAPI(): Promise<DatasetResponse> {
   return serviceAxios({
-    url: '/api/traffic/dataset/',
-    method: 'get'
-  })
+    url: "/api/traffic/dataset/",
+    method: "get",
+  });
 }
 
 // ==================== 1.2 交通标志分类管理 ====================
@@ -60,44 +60,53 @@ export function getDatasetAPI(): Promise<DatasetResponse> {
 /**
  * 获取交通标志分类列表
  */
-export function getTrafficCategoriesAPI(params?: TrafficCategoryQueryParams): Promise<TrafficCategoryListResponse> {
+export function getTrafficCategoriesAPI(
+  params?: TrafficCategoryQueryParams
+): Promise<TrafficCategoryListResponse> {
   return serviceAxios({
-    url: '/api/traffic/categories/',
-    method: 'get',
-    params
-  })
+    url: "/api/traffic/categories/",
+    method: "get",
+    params,
+  });
 }
 
 /**
  * 创建新的交通标志分类
  */
-export function createTrafficCategoryAPI(data: CreateTrafficCategoryRequest): Promise<TrafficCategoryResponse> {
+export function createTrafficCategoryAPI(
+  data: CreateTrafficCategoryRequest
+): Promise<TrafficCategoryResponse> {
   return serviceAxios({
-    url: '/api/traffic/categories/',
-    method: 'post',
-    data
-  })
+    url: "/api/traffic/categories/",
+    method: "post",
+    data,
+  });
 }
 
 /**
  * 获取指定分类详情
  */
-export function getTrafficCategoryAPI(id: number): Promise<TrafficCategoryResponse> {
+export function getTrafficCategoryAPI(
+  id: number
+): Promise<TrafficCategoryResponse> {
   return serviceAxios({
     url: `/api/traffic/categories/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
  * 更新指定分类
  */
-export function updateTrafficCategoryAPI(id: number, data: UpdateTrafficCategoryRequest): Promise<TrafficCategoryResponse> {
+export function updateTrafficCategoryAPI(
+  id: number,
+  data: UpdateTrafficCategoryRequest
+): Promise<TrafficCategoryResponse> {
   return serviceAxios({
     url: `/api/traffic/categories/${id}/`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -106,8 +115,8 @@ export function updateTrafficCategoryAPI(id: number, data: UpdateTrafficCategory
 export function deleteTrafficCategoryAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/categories/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 // ==================== 1.3 交通标志管理 ====================
@@ -128,12 +137,14 @@ export function getTrafficSignsAPI(
 /**
  * 创建新的交通标志
  */
-export function createTrafficSignAPI(data: CreateTrafficSignRequest): Promise<TrafficSignResponse> {
+export function createTrafficSignAPI(
+  data: CreateTrafficSignRequest
+): Promise<TrafficSignResponse> {
   return serviceAxios({
-    url: '/api/traffic/signs/',
-    method: 'post',
-    data
-  })
+    url: "/api/traffic/signs/",
+    method: "post",
+    data,
+  });
 }
 
 /**
@@ -142,19 +153,22 @@ export function createTrafficSignAPI(data: CreateTrafficSignRequest): Promise<Tr
 export function getTrafficSignAPI(id: number): Promise<TrafficSignResponse> {
   return serviceAxios({
     url: `/api/traffic/signs/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
  * 更新指定交通标志
  */
-export function updateTrafficSignAPI(id: number, data: UpdateTrafficSignRequest): Promise<TrafficSignResponse> {
+export function updateTrafficSignAPI(
+  id: number,
+  data: UpdateTrafficSignRequest
+): Promise<TrafficSignResponse> {
   return serviceAxios({
     url: `/api/traffic/signs/${id}/`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -163,8 +177,8 @@ export function updateTrafficSignAPI(id: number, data: UpdateTrafficSignRequest)
 export function deleteTrafficSignAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/signs/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 // ==================== 1.4 检测记录管理 ====================
@@ -172,44 +186,53 @@ export function deleteTrafficSignAPI(id: number): Promise<ApiResponse> {
 /**
  * 获取检测记录列表
  */
-export function getDetectionRecordsAPI(params?: DetectionRecordQueryParams): Promise<DetectionRecordListResponse> {
+export function getDetectionRecordsAPI(
+  params?: DetectionRecordQueryParams
+): Promise<DetectionRecordListResponse> {
   return serviceAxios({
-    url: '/api/traffic/records/',
-    method: 'get',
-    params
-  })
+    url: "/api/traffic/records/",
+    method: "get",
+    params,
+  });
 }
 
 /**
  * 创建新的检测记录
  */
-export function createDetectionRecordAPI(data: CreateDetectionRecordRequest): Promise<DetectionRecordResponse> {
+export function createDetectionRecordAPI(
+  data: CreateDetectionRecordRequest
+): Promise<DetectionRecordResponse> {
   return serviceAxios({
-    url: '/api/traffic/records/',
-    method: 'post',
-    data
-  })
+    url: "/api/traffic/records/",
+    method: "post",
+    data,
+  });
 }
 
 /**
  * 获取指定检测记录详情
  */
-export function getDetectionRecordAPI(id: number): Promise<DetectionRecordResponse> {
+export function getDetectionRecordAPI(
+  id: number
+): Promise<DetectionRecordResponse> {
   return serviceAxios({
     url: `/api/traffic/records/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
  * 更新指定检测记录
  */
-export function updateDetectionRecordAPI(id: number, data: UpdateDetectionRecordRequest): Promise<DetectionRecordResponse> {
+export function updateDetectionRecordAPI(
+  id: number,
+  data: UpdateDetectionRecordRequest
+): Promise<DetectionRecordResponse> {
   return serviceAxios({
     url: `/api/traffic/records/${id}/`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -227,44 +250,53 @@ export function deleteDetectionRecordAPI(id: number): Promise<ApiResponse> {
 /**
  * 获取检测结果列表
  */
-export function getDetectionResultsAPI(params?: DetectionResultQueryParams): Promise<DetectionResultListResponse> {
+export function getDetectionResultsAPI(
+  params?: DetectionResultQueryParams
+): Promise<DetectionResultListResponse> {
   return serviceAxios({
-    url: '/api/traffic/results/',
-    method: 'get',
-    params
-  })
+    url: "/api/traffic/results/",
+    method: "get",
+    params,
+  });
 }
 
 /**
  * 创建新的检测结果
  */
-export function createDetectionResultAPI(data: CreateDetectionResultRequest): Promise<DetectionResultResponse> {
+export function createDetectionResultAPI(
+  data: CreateDetectionResultRequest
+): Promise<DetectionResultResponse> {
   return serviceAxios({
-    url: '/api/traffic/results/',
-    method: 'post',
-    data
-  })
+    url: "/api/traffic/results/",
+    method: "post",
+    data,
+  });
 }
 
 /**
  * 获取指定检测结果详情
  */
-export function getDetectionResultAPI(id: number): Promise<DetectionResultResponse> {
+export function getDetectionResultAPI(
+  id: number
+): Promise<DetectionResultResponse> {
   return serviceAxios({
     url: `/api/traffic/results/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
  * 更新指定检测结果
  */
-export function updateDetectionResultAPI(id: number, data: UpdateDetectionResultRequest): Promise<DetectionResultResponse> {
+export function updateDetectionResultAPI(
+  id: number,
+  data: UpdateDetectionResultRequest
+): Promise<DetectionResultResponse> {
   return serviceAxios({
     url: `/api/traffic/results/${id}/`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -273,8 +305,8 @@ export function updateDetectionResultAPI(id: number, data: UpdateDetectionResult
 export function deleteDetectionResultAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/results/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 // ==================== 1.6 用户管理 ====================
@@ -282,23 +314,27 @@ export function deleteDetectionResultAPI(id: number): Promise<ApiResponse> {
 /**
  * 获取用户列表
  */
-export function getTrafficUsersAPI(params?: TrafficUserQueryParams): Promise<TrafficUserListResponse> {
+export function getTrafficUsersAPI(
+  params?: TrafficUserQueryParams
+): Promise<TrafficUserListResponse> {
   return serviceAxios({
-    url: '/api/traffic/users/',
-    method: 'get',
-    params
-  })
+    url: "/api/traffic/users/",
+    method: "get",
+    params,
+  });
 }
 
 /**
  * 创建新用户
  */
-export function createTrafficUserAPI(data: CreateTrafficUserRequest): Promise<TrafficUserResponse> {
+export function createTrafficUserAPI(
+  data: CreateTrafficUserRequest
+): Promise<TrafficUserResponse> {
   return serviceAxios({
-    url: '/api/traffic/users/',
-    method: 'post',
-    data
-  })
+    url: "/api/traffic/users/",
+    method: "post",
+    data,
+  });
 }
 
 /**
@@ -307,19 +343,22 @@ export function createTrafficUserAPI(data: CreateTrafficUserRequest): Promise<Tr
 export function getTrafficUserAPI(id: number): Promise<TrafficUserResponse> {
   return serviceAxios({
     url: `/api/traffic/users/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
  * 更新指定用户
  */
-export function updateTrafficUserAPI(id: number, data: UpdateTrafficUserRequest): Promise<TrafficUserResponse> {
+export function updateTrafficUserAPI(
+  id: number,
+  data: UpdateTrafficUserRequest
+): Promise<TrafficUserResponse> {
   return serviceAxios({
     url: `/api/traffic/users/${id}/`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -328,8 +367,8 @@ export function updateTrafficUserAPI(id: number, data: UpdateTrafficUserRequest)
 export function deleteTrafficUserAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/users/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 // ==================== 1.7 用户统计管理 ====================
@@ -337,44 +376,53 @@ export function deleteTrafficUserAPI(id: number): Promise<ApiResponse> {
 /**
  * 获取用户统计列表
  */
-export function getUserStatisticsAPI(params?: UserStatisticsQueryParams): Promise<UserStatisticsListResponse> {
+export function getUserStatisticsAPI(
+  params?: UserStatisticsQueryParams
+): Promise<UserStatisticsListResponse> {
   return serviceAxios({
-    url: '/api/traffic/user-statistics/',
-    method: 'get',
-    params
-  })
+    url: "/api/traffic/user-statistics/",
+    method: "get",
+    params,
+  });
 }
 
 /**
  * 创建用户统计
  */
-export function createUserStatisticsAPI(data: CreateUserStatisticsRequest): Promise<UserStatisticsResponse> {
+export function createUserStatisticsAPI(
+  data: CreateUserStatisticsRequest
+): Promise<UserStatisticsResponse> {
   return serviceAxios({
-    url: '/api/traffic/user-statistics/',
-    method: 'post',
-    data
-  })
+    url: "/api/traffic/user-statistics/",
+    method: "post",
+    data,
+  });
 }
 
 /**
  * 获取指定用户统计详情
  */
-export function getUserStatisticsDetailAPI(id: number): Promise<UserStatisticsResponse> {
+export function getUserStatisticsDetailAPI(
+  id: number
+): Promise<UserStatisticsResponse> {
   return serviceAxios({
     url: `/api/traffic/user-statistics/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
  * 更新指定用户统计
  */
-export function updateUserStatisticsAPI(id: number, data: Partial<CreateUserStatisticsRequest>): Promise<UserStatisticsResponse> {
+export function updateUserStatisticsAPI(
+  id: number,
+  data: Partial<CreateUserStatisticsRequest>
+): Promise<UserStatisticsResponse> {
   return serviceAxios({
     url: `/api/traffic/user-statistics/${id}/`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -383,8 +431,8 @@ export function updateUserStatisticsAPI(id: number, data: Partial<CreateUserStat
 export function deleteUserStatisticsAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/user-statistics/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 // ==================== 1.8 统计接口 ====================
@@ -392,9 +440,7 @@ export function deleteUserStatisticsAPI(id: number): Promise<ApiResponse> {
 /**
  * 获取系统统计概览
  */
-export function getSystemStatisticsOverviewAPI(): Promise<
-  ApiResponse<SystemStatisticsOverview>
-> {
+export function getSystemStatisticsOverviewAPI(): Promise<SystemStatisticsOverview> {
   return serviceAxios({
     url: "/api/traffic/statistics/overview/",
     method: "get",
@@ -404,11 +450,13 @@ export function getSystemStatisticsOverviewAPI(): Promise<
 /**
  * 获取指定用户的详细统计信息
  */
-export function getUserDetailedStatisticsAPI(userId: number): Promise<UserDetailedStatisticsResponse> {
+export function getUserDetailedStatisticsAPI(
+  userId: number
+): Promise<UserDetailedStatisticsResponse> {
   return serviceAxios({
     url: `/api/traffic/statistics/user/${userId}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 // ==================== 1.8 知识文章管理 ====================
@@ -416,57 +464,75 @@ export function getUserDetailedStatisticsAPI(userId: number): Promise<UserDetail
 /**
  * 获取知识文章列表
  */
-export function getKnowledgeArticlesAPI(params?: KnowledgeArticleQueryParams): Promise<KnowledgeArticleListResponse> {
+export function getKnowledgeArticlesAPI(
+  params?: KnowledgeArticleQueryParams
+): Promise<KnowledgeArticleListResponse> {
   return serviceAxios({
-    url: '/api/traffic/knowledge/',
-    method: 'get',
-    params
-  })
+    url: "/api/traffic/knowledge/",
+    method: "get",
+    params,
+  });
 }
 
 /**
  * 创建新的知识文章
  */
-export function createKnowledgeArticleAPI(data: CreateKnowledgeArticleRequest | FormData): Promise<KnowledgeArticleResponse> {
+export function createKnowledgeArticleAPI(
+  data: CreateKnowledgeArticleRequest | FormData
+): Promise<KnowledgeArticleResponse> {
   return serviceAxios({
-    url: '/api/traffic/knowledge/',
-    method: 'post',
+    url: "/api/traffic/knowledge/",
+    method: "post",
     data,
-    headers: data instanceof FormData ? { 'Content-Type': 'multipart/form-data' } : undefined
-  })
+    headers:
+      data instanceof FormData
+        ? { "Content-Type": "multipart/form-data" }
+        : undefined,
+  });
 }
 
 /**
  * 获取指定知识文章详情
  */
-export function getKnowledgeArticleAPI(id: number): Promise<KnowledgeArticleResponse> {
+export function getKnowledgeArticleAPI(
+  id: number
+): Promise<KnowledgeArticleResponse> {
   return serviceAxios({
     url: `/api/traffic/knowledge/${id}/`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
  * 更新指定知识文章
  */
-export function updateKnowledgeArticleAPI(id: number, data: UpdateKnowledgeArticleRequest | FormData): Promise<KnowledgeArticleResponse> {
+export function updateKnowledgeArticleAPI(
+  id: number,
+  data: UpdateKnowledgeArticleRequest | FormData
+): Promise<KnowledgeArticleResponse> {
   return serviceAxios({
     url: `/api/traffic/knowledge/${id}/`,
-    method: 'put',
+    method: "put",
     data,
-    headers: data instanceof FormData ? { 'Content-Type': 'multipart/form-data' } : undefined
-  })
+    headers:
+      data instanceof FormData
+        ? { "Content-Type": "multipart/form-data" }
+        : undefined,
+  });
 }
 
 /**
  * 部分更新知识文章
  */
-export function patchKnowledgeArticleAPI(id: number, data: Partial<UpdateKnowledgeArticleRequest>): Promise<KnowledgeArticleResponse> {
+export function patchKnowledgeArticleAPI(
+  id: number,
+  data: Partial<UpdateKnowledgeArticleRequest>
+): Promise<KnowledgeArticleResponse> {
   return serviceAxios({
     url: `/api/traffic/knowledge/${id}/`,
-    method: 'patch',
-    data
-  })
+    method: "patch",
+    data,
+  });
 }
 
 /**
@@ -475,6 +541,6 @@ export function patchKnowledgeArticleAPI(id: number, data: Partial<UpdateKnowled
 export function deleteKnowledgeArticleAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/knowledge/${id}/`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }

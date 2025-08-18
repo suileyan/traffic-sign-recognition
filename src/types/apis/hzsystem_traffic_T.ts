@@ -282,152 +282,160 @@ export interface TrafficUserQueryParams {
 
 // 用户统计类型
 export interface UserStatistics {
-  id: number
-  user: number
-  user_name: string
-  user_email: string
-  total_detections: number
-  correct_detections: number
-  accuracy_rate: number
-  total_time_spent: number
-  favorite_signs: number[]
-  favorite_signs_count: number
-  monthly_detections: number
-  achievements: string[]
-  created_at: string
-  updated_at: string
+  code: number;
+  message: string;
+  data: Daum[];
+}
+
+export interface Daum {
+  id: number;
+  user_name: string;
+  user_email: string;
+  accuracy_rate: number;
+  favorite_signs_count: number;
+  total_detections: number;
+  correct_detections: number;
+  weekly_detections: number;
+  monthly_detections: number;
+  total_signs_detected: number;
+  achievements: string[];
+  last_detection_date: string;
+  created_at: string;
+  updated_at: string;
+  user: number;
+  favorite_signs: any[];
 }
 
 export interface CreateUserStatisticsRequest {
-  user: number
-  total_detections: number
-  correct_detections: number
-  total_time_spent: number
-  favorite_signs: number[]
-  monthly_detections: number
-  achievements: string[]
+  user: number;
+  total_detections: number;
+  correct_detections: number;
+  total_time_spent: number;
+  favorite_signs: number[];
+  monthly_detections: number;
+  achievements: string[];
 }
 
 export interface UserStatisticsQueryParams {
-  user?: number
-  min_accuracy?: number
-  min_detections?: number
+  user?: number;
+  min_accuracy?: number;
+  min_detections?: number;
 }
 
 // 检测记录列表响应类型（嵌套结构）
 export interface DetectionRecordListResponse {
-  count: number
-  next: string | null
-  previous: string | null
+  count: number;
+  next: string | null;
+  previous: string | null;
   results: {
-    code: number
-    message: string
-    data: DetectionRecord[]
-  }
+    code: number;
+    message: string;
+    data: DetectionRecord[];
+  };
 }
 
 // 统计接口类型
 export interface CategoryDistribution {
-  traffic_sign__category__name: string
-  count: number
+  traffic_sign__category__name: string;
+  count: number;
 }
 
 export interface SystemStatisticsOverview {
-  total_users: number
-  total_detections: number
-  average_accuracy: number
-  system_availability: number
-  category_distribution: CategoryDistribution[]
+  total_users: number;
+  total_detections: number;
+  average_accuracy: number;
+  system_availability: number;
+  category_distribution: CategoryDistribution[];
 }
 
 export interface UserDetailedStatistics {
-  total_detections: number
-  correct_detections: number
-  accuracy_rate: number
-  weekly_detections: number
-  monthly_detections: number
-  achievements: string[]
+  total_detections: number;
+  correct_detections: number;
+  accuracy_rate: number;
+  weekly_detections: number;
+  monthly_detections: number;
+  achievements: string[];
   recent_records: Array<{
-    id: number
-    user_name: string
-    detection_type_display: string
-    status_display: string
-    processing_time: number
-    created_at: string
-  }>
+    id: number;
+    user_name: string;
+    detection_type_display: string;
+    status_display: string;
+    processing_time: number;
+    created_at: string;
+  }>;
 }
 
 // 知识文章类型
-export type ArticleType = 'guide' | 'regulation' | 'safety' | 'technology'
+export type ArticleType = "guide" | "regulation" | "safety" | "technology";
 
 export interface RelatedSignDetail {
-  id: number
-  name: string
-  code: string
-  category_name: string
-  shape: string
-  main_color: string
-  is_active: boolean
+  id: number;
+  name: string;
+  code: string;
+  category_name: string;
+  shape: string;
+  main_color: string;
+  is_active: boolean;
 }
 
 export interface KnowledgeArticle {
-  id: number
-  title: string
-  content: string
-  summary: string
-  article_type: ArticleType
-  article_type_display: string
-  tags: string[]
-  related_signs: number[]
-  related_signs_count: number
-  related_signs_detail: RelatedSignDetail[]
-  view_count: number
-  is_published: boolean
-  sort_order: number
-  created_at: string
-  updated_at: string
+  id: number;
+  title: string;
+  content: string;
+  summary: string;
+  article_type: ArticleType;
+  article_type_display: string;
+  tags: string[];
+  related_signs: number[];
+  related_signs_count: number;
+  related_signs_detail: RelatedSignDetail[];
+  view_count: number;
+  is_published: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CreateKnowledgeArticleRequest {
-  title: string
-  content: string
-  summary: string
-  article_type: ArticleType
-  tags?: string[]
-  related_signs?: number[]
-  is_published: boolean
-  sort_order: number
+  title: string;
+  content: string;
+  summary: string;
+  article_type: ArticleType;
+  tags?: string[];
+  related_signs?: number[];
+  is_published: boolean;
+  sort_order: number;
 }
 
 export interface UpdateKnowledgeArticleRequest {
-  title?: string
-  content?: string
-  summary?: string
-  article_type?: ArticleType
-  tags?: string[]
-  related_signs?: number[]
-  is_published?: boolean
-  sort_order?: number
+  title?: string;
+  content?: string;
+  summary?: string;
+  article_type?: ArticleType;
+  tags?: string[];
+  related_signs?: number[];
+  is_published?: boolean;
+  sort_order?: number;
 }
 
 export interface KnowledgeArticleQueryParams {
-  article_type?: ArticleType
-  is_published?: boolean
-  search?: string
-  page?: number
-  page_size?: number
+  article_type?: ArticleType;
+  is_published?: boolean;
+  search?: string;
+  page?: number;
+  page_size?: number;
 }
 
 // 知识文章列表响应类型（嵌套结构）
 export interface KnowledgeArticleListResponse {
-  count: number
-  next: string | null
-  previous: string | null
+  count: number;
+  next: string | null;
+  previous: string | null;
   results: {
-    code: number
-    message: string
-    data: KnowledgeArticle[]
-  }
+    code: number;
+    message: string;
+    data: KnowledgeArticle[];
+  };
 }
 
 // 响应类型定义
@@ -441,7 +449,7 @@ export type DetectionResultListResponse = DetectionResult[];
 export type DetectionResultResponse = DetectionResult;
 export type TrafficUserListResponse = PaginatedResponse<TrafficUser>;
 export type TrafficUserResponse = TrafficUser;
-export type UserStatisticsListResponse = UserStatistics[];
+export type UserStatisticsListResponse = UserStatistics;
 export type UserStatisticsResponse = UserStatistics;
 export type SystemStatisticsOverviewResponse = SystemStatisticsOverview;
 export type UserDetailedStatisticsResponse = UserDetailedStatistics;

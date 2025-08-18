@@ -88,23 +88,33 @@
     },
     transition: { duration: 0.6, delay: 0.3, ease: ["easeOut"] },
   };
-  import { getSystemStatisticsOverviewAPI, getUserDetailedStatisticsAPI } from '@/api/hzsystem_traffic/hzsystem_traffic'
-  import type { SystemStatisticsOverviewResponse, UserDetailedStatisticsResponse } from '@/api/hzsystem_traffic_T'
+  import { getSystemStatisticsOverviewAPI, getUserStatisticsAPI, getDetectionRecordsAPI } from '@/api/hzsystem_traffic/hzsystem_traffic'
+  import type { SystemStatisticsOverviewResponse, UserStatistics, DetectionRecord } from '@/types/apis/hzsystem_traffic_T'
   import { ref, onMounted, computed } from 'vue'
+  import { User, ShoppingCart, Money, Timer, TrendCharts } from '@element-plus/icons-vue'
   const statistics = ref<SystemStatisticsOverviewResponse>()
+  const userStatistics = ref<UserStatistics>()
+  const detectionRecords = ref<DetectionRecord[]>([])
   const loading = ref(false)
-  
+
   const fetchStatistics = async () => {
     loading.value = true
     try {
       statistics.value = await getSystemStatisticsOverviewAPI()
+      userStatistics.value = await getUserStatisticsAPI()
+      const detectionResponse = await getDetectionRecordsAPI()
+      if (detectionResponse && detectionResponse.results && detectionResponse.results.data) {
+        detectionRecords.value = detectionResponse.results.data.sort((a, b) => b.id - a.id)
+      } else {
+        detectionRecords.value = []
+      }
     } catch (error) {
       console.error('获取统计数据失败:', error)
     } finally {
       loading.value = false
     }
   }
-  
+
   onMounted(() => {
     fetchStatistics()
   })
@@ -145,53 +155,151 @@
     };
   })
   
-  // 用户增长趋势（模拟数据）
+  // 用户增长趋势（基于真实数据）
   const userGrowthData = computed((): EChartsOption => {
-    // 获取最近6个月的标签
+    if (!userStatistics.value || !userStatistics.value.data) {
+      return {
+        title: { text: '用户增长趋势', left: 'center' },
+        tooltip: { trigger: 'axis' },
+        xAxis: { type: 'category', data: [] },
+        yAxis: { type: 'value' },
+        series: [{
+          data: [],
+          type: 'line',
+          smooth: true,
+          itemStyle: { color: '#3b82f6' }
+        }]
+      }
+    }
+
+    // 按月份统计用户注册数量
+    const monthlyStats = new Map<string, number>()
     const now = new Date()
-    const last6Months = Array.from({ length: 6 }, (_, i) => {
-      const date = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1)
-      return `${date.getMonth() + 1}月`
+    
+    // 初始化最近6个月的数据
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1)
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+      monthlyStats.set(monthKey, 0)
+    }
+
+    // 统计每个月的用户注册数量
+    userStatistics.value.data.forEach(user => {
+      const createdDate = new Date(user.created_at)
+      const monthKey = `${createdDate.getFullYear()}-${String(createdDate.getMonth() + 1).padStart(2, '0')}`
+      if (monthlyStats.has(monthKey)) {
+        monthlyStats.set(monthKey, (monthlyStats.get(monthKey) || 0) + 1)
+      }
     })
-  
-    // 模拟用户增长数据
-    const mockData = [120, 150, 180, 220, 280, 320]
-  
+
+    // 生成图表数据
+    const labels: string[] = []
+    const data: number[] = []
+    let cumulativeCount = 0
+
+    Array.from(monthlyStats.entries()).forEach(([monthKey, count]) => {
+      const [year, month] = monthKey.split('-')
+      labels.push(`${month}月`)
+      cumulativeCount += count
+      data.push(cumulativeCount)
+    })
+
     return {
       title: { text: '用户增长趋势（最近6个月）', left: 'center' },
-      tooltip: { trigger: 'axis' },
-      xAxis: { type: 'category', data: last6Months },
-      yAxis: { type: 'value' },
+      tooltip: { 
+        trigger: 'axis',
+        formatter: (params: any) => {
+          const dataIndex = params[0].dataIndex
+          const monthKey = Array.from(monthlyStats.keys())[dataIndex]
+          const monthlyCount = monthlyStats.get(monthKey) || 0
+          return `${params[0].name}<br/>累计用户: ${params[0].value}<br/>本月新增: ${monthlyCount}`
+        }
+      },
+      xAxis: { type: 'category', data: labels },
+      yAxis: { type: 'value', name: '用户数量' },
       series: [{
-        data: mockData,
+        data: data,
         type: 'line',
         smooth: true,
-        itemStyle: { color: '#3b82f6' }
+        itemStyle: { color: '#3b82f6' },
+        lineStyle: { color: '#3b82f6' },
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(59, 130, 246, 0.3)' },
+              { offset: 1, color: 'rgba(59, 130, 246, 0.1)' }
+            ]
+          }
+        }
       }]
     }
   })
   
-  // 检测量统计（模拟数据）
+  // 检测量统计（基于真实数据）
   const detectionStatsData = computed((): EChartsOption => {
-    // 生成最近7天的星期标签
+    if (!detectionRecords.value || detectionRecords.value.length === 0) {
+      return {
+        title: { text: '检测量统计（最近7天）', left: 'center' },
+        tooltip: { trigger: 'axis' },
+        xAxis: { type: 'category', data: [] },
+        yAxis: { type: 'value' },
+        series: [{
+          data: [],
+          type: 'line',
+          smooth: true,
+          itemStyle: { color: '#10b981' }
+        }]
+      }
+    }
+
+    // 生成最近7天的日期和标签
     const now = new Date()
     const last7Days = Array.from({ length: 7 }, (_, i) => {
       const date = new Date(now)
       date.setDate(date.getDate() - (6 - i))
-      const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-      return weekdays[date.getDay()]
+      return {
+        date: date.toISOString().split('T')[0], // YYYY-MM-DD格式
+        label: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()]
+      }
     })
-  
-    // 模拟检测量数据
-    const mockData = [45, 52, 38, 67, 73, 89, 56]
+
+    // 按日期统计检测量
+    const dailyStats = new Map<string, number>()
+    last7Days.forEach(day => {
+      dailyStats.set(day.date, 0)
+    })
+
+    // 统计每天的检测数量
+    detectionRecords.value.forEach(record => {
+      const recordDate = new Date(record.created_at).toISOString().split('T')[0]
+      if (dailyStats.has(recordDate)) {
+        dailyStats.set(recordDate, (dailyStats.get(recordDate) || 0) + 1)
+      }
+    })
+
+    // 生成图表数据
+    const labels = last7Days.map(day => day.label)
+    const data = last7Days.map(day => dailyStats.get(day.date) || 0)
   
     return {
       title: { text: '检测量统计（最近7天）', left: 'center' },
-      tooltip: { trigger: 'axis' },
-      xAxis: { type: 'category', data: last7Days },
-      yAxis: { type: 'value' },
+      tooltip: { 
+        trigger: 'axis',
+        formatter: (params: any) => {
+          const dataIndex = params[0].dataIndex
+          const date = last7Days[dataIndex].date
+          return `${params[0].name}<br/>检测数量: ${params[0].value}<br/>日期: ${date}`
+        }
+      },
+      xAxis: { type: 'category', data: labels },
+      yAxis: { type: 'value', name: '检测数量' },
       series: [{
-        data: mockData,
+        data: data,
         type: 'line',
         smooth: true,
         itemStyle: { color: '#10b981' },
@@ -214,7 +322,7 @@
   })
   
   const trafficSignDistributionData = computed((): EChartsOption => {
-    if (!statistics.value || !statistics.value.category_distribution) {
+    if (!detectionRecords.value || detectionRecords.value.length === 0) {
       return {
         title: { text: '交通标志分类分布', left: 'center' },
         tooltip: { trigger: 'item' },
@@ -236,20 +344,41 @@
         ],
       }
     }
+
+    // 统计各类交通标志的检测次数
+    const categoryStats = new Map<string, number>()
+    
+    detectionRecords.value.forEach(record => {
+      if (record.detection_results && record.detection_results.length > 0) {
+        // 取置信度最高的检测结果
+        const bestResult = record.detection_results.reduce((prev, current) => 
+          (prev.confidence > current.confidence) ? prev : current
+        )
+        if (bestResult.traffic_sign_name) {
+          categoryStats.set(bestResult.traffic_sign_name, (categoryStats.get(bestResult.traffic_sign_name) || 0) + 1)
+        }
+      }
+    })
+
+    // 转换为图表数据格式
+    const chartData = Array.from(categoryStats.entries()).map(([name, count]) => ({
+      name,
+      value: count
+    }))
   
     return {
       title: { text: '交通标志分类分布', left: 'center' },
-      tooltip: { trigger: 'item' },
+      tooltip: { 
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c} ({d}%)'
+      },
       legend: { orient: 'vertical', left: 'left' },
       series: [
         {
           name: '标志类型',
           type: 'pie',
           radius: '50%',
-          data: statistics.value.category_distribution.map((item) => ({ 
-            value: item.count, 
-            name: item.traffic_sign__category__name 
-          })),
+          data: chartData,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -264,11 +393,44 @@
   
   // 模型性能监控
   const modelPerformanceData = computed((): EChartsOption => {
-    const accuracyRate = statistics.value ? statistics.value.average_accuracy : 0
+    if (!detectionRecords.value || detectionRecords.value.length === 0) {
+      return {
+        title: { text: '模型性能监控', left: 'center' },
+        tooltip: { formatter: '{a} <br/>{b} : {c}%' },
+        series: [{
+          name: '准确率',
+          type: 'gauge',
+          detail: { formatter: '{value}%' },
+          data: [{ value: 0, name: '准确率' }],
+          axisLine: {
+            lineStyle: {
+              color: [
+                [0.3, '#ff4757'],
+                [0.7, '#ffa502'],
+                [1, '#2ed573'],
+              ],
+            },
+          },
+        }]
+      }
+    }
+
+    // 计算检测准确率（与history页面保持一致的计算方式）
+    const totalDetections = detectionRecords.value.length
+    const successfulDetections = detectionRecords.value.filter(record =>
+      record.status_display === 'completed' || record.status_display === '成功'
+    ).length
+    
+    const accuracyRate = totalDetections > 0 ? 
+      Math.round((successfulDetections / totalDetections) * 1000) / 10 : 0
   
     return {
       title: { text: '模型性能监控', left: 'center' },
-      tooltip: { formatter: '{a} <br/>{b} : {c}%' },
+      tooltip: { 
+        formatter: (params: any) => {
+          return `${params.name}<br/>准确率: ${params.value}%<br/>成功检测: ${successfulDetections}<br/>总检测数: ${totalDetections}`
+        }
+      },
       series: [{
         name: '准确率',
         type: 'gauge',
@@ -608,71 +770,4 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   }
   </style>
-  
-  const dashboardData = computed(() => statistics.value ? {
-    totalUsers: {
-      value: statistics.value.total_users,
-      change: '',
-      label: '总用户数',
-    },
-    totalDetections: {
-      value: statistics.value.total_detections,
-      change: '',
-      label: '总检测次数',
-    },
-    averageAccuracy: {
-      value: statistics.value.accuracy_rate ? (statistics.value.accuracy_rate * 100).toFixed(1) + '%' : '--',
-      change: '',
-      label: '平均准确率',
-    },
-    averageResponseTime: {
-      value: '--',
-      change: '',
-      label: '平均响应时间',
-    },
-  } : {
-    totalUsers: { value: 0, change: '', label: '总用户数' },
-    totalDetections: { value: 0, change: '', label: '总检测次数' },
-    averageAccuracy: { value: '--', change: '', label: '平均准确率' },
-    averageResponseTime: { value: '--', change: '', label: '平均响应时间' },
-  })
-  const wasteDistributionData = computed((): EChartsOption => statistics.value ? {
-    title: { text: '垃圾分类分布', left: 'center' },
-    tooltip: { trigger: 'item' },
-    legend: { orient: 'vertical', left: 'left' },
-    series: [
-      {
-        name: '垃圾类型',
-        type: 'pie',
-        radius: '50%',
-        data: statistics.value.category_distribution.map(item => ({ value: item.count, name: item.detected_category__name })),
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
-      },
-    ],
-  } : {
-    title: { text: '垃圾分类分布', left: 'center' },
-    tooltip: { trigger: 'item' },
-    legend: { orient: 'vertical', left: 'left' },
-    series: [
-      {
-        name: '垃圾类型',
-        type: 'pie',
-        radius: '50%',
-        data: [],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
-      },
-    ],
-  })
   
