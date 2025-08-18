@@ -38,15 +38,16 @@ export interface Dataset {
 }
 
 // 交通标志分类类型
-export type CategoryType = 'warning' | 'prohibition' | 'indication'
+export type CategoryType = 'warning' | 'prohibition' | 'indication' | 'guide' | 'tourist' | 'construction'
 
 export interface TrafficCategory {
   id: number
   name: string
   category_type: CategoryType
   description: string
-  color_scheme: string
-  is_active: boolean
+  usage_scenario: string
+  icon: string
+  color: string
   created_at: string
   updated_at: string
 }
@@ -55,19 +56,21 @@ export interface CreateTrafficCategoryRequest {
   name: string
   category_type: CategoryType
   description: string
-  color_scheme: string
-  is_active: boolean
+  usage_scenario: string
+  icon: string
+  color: string
 }
 
 export interface UpdateTrafficCategoryRequest {
   name?: string
   description?: string
-  is_active?: boolean
+  usage_scenario?: string
+  icon?: string
+  color?: string
 }
 
 export interface TrafficCategoryQueryParams {
   category_type?: CategoryType
-  is_active?: boolean
 }
 
 // 交通标志类型
@@ -331,13 +334,86 @@ export interface UserDetailedStatistics {
   }>
 }
 
+// 知识文章类型
+export type ArticleType = 'guide' | 'regulation' | 'safety' | 'technology'
+
+export interface RelatedSignDetail {
+  id: number
+  name: string
+  code: string
+  category_name: string
+  shape: string
+  main_color: string
+  is_active: boolean
+}
+
+export interface KnowledgeArticle {
+  id: number
+  title: string
+  content: string
+  summary: string
+  article_type: ArticleType
+  article_type_display: string
+  tags: string[]
+  related_signs: number[]
+  related_signs_count: number
+  related_signs_detail: RelatedSignDetail[]
+  view_count: number
+  is_published: boolean
+  sort_order: number
+  created_at: string
+  updated_at: string
+}
+
+export interface CreateKnowledgeArticleRequest {
+  title: string
+  content: string
+  summary: string
+  article_type: ArticleType
+  tags?: string[]
+  related_signs?: number[]
+  is_published: boolean
+  sort_order: number
+}
+
+export interface UpdateKnowledgeArticleRequest {
+  title?: string
+  content?: string
+  summary?: string
+  article_type?: ArticleType
+  tags?: string[]
+  related_signs?: number[]
+  is_published?: boolean
+  sort_order?: number
+}
+
+export interface KnowledgeArticleQueryParams {
+  article_type?: ArticleType
+  is_published?: boolean
+  search?: string
+  page?: number
+  page_size?: number
+}
+
+// 知识文章列表响应类型（嵌套结构）
+export interface KnowledgeArticleListResponse {
+  count: number
+  next: string | null
+  previous: string | null
+  results: {
+    code: number
+    message: string
+    data: KnowledgeArticle[]
+  }
+}
+
 // 响应类型定义
 export type DatasetResponse = Dataset;
-export type TrafficCategoryListResponse = TrafficCategory[];
-export type TrafficCategoryResponse = TrafficCategory;
+export type TrafficCategoryListResponse = ApiResponse<TrafficCategory[]>;
+export type TrafficCategoryResponse = ApiResponse<TrafficCategory>;
 export type TrafficSignListResponse = TrafficSign[];
 export type TrafficSignResponse = TrafficSign;
-export type DetectionRecordResponse = DetectionRecord;
+export type DetectionRecordResponse = ApiResponse<DetectionRecord>;
 export type DetectionResultListResponse = DetectionResult[];
 export type DetectionResultResponse = DetectionResult;
 export type TrafficUserListResponse = PaginatedResponse<TrafficUser>;
@@ -346,3 +422,4 @@ export type UserStatisticsListResponse = UserStatistics[];
 export type UserStatisticsResponse = UserStatistics;
 export type SystemStatisticsOverviewResponse = SystemStatisticsOverview;
 export type UserDetailedStatisticsResponse = UserDetailedStatistics;
+export type KnowledgeArticleResponse = KnowledgeArticle;

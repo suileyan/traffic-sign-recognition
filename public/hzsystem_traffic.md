@@ -384,21 +384,21 @@
 
 ```json
 {
-	"count": 98,
-	"next": "http://192.168.124.3:8003/api/traffic/records/?page=2",
-	"results": {
-		"code": 200,
-		"message": "获取成功",
-		"data": [
-			{
-				"id": 99,
-				"detection_type_display": "实时检测",
-				"status_display": "completed",
-				"processing_time": 0,
-				"created_at": "2025-08-15T20:25:41.603630"
-			},
-		]
-	}
+ "count": 98,
+ "next": "http://192.168.124.3:8003/api/traffic/records/?page=2",
+ "results": {
+  "code": 200,
+  "message": "获取成功",
+  "data": [
+   {
+    "id": 99,
+    "detection_type_display": "实时检测",
+    "status_display": "completed",
+    "processing_time": 0,
+    "created_at": "2025-08-15T20:25:41.603630"
+   },
+  ]
+ }
 }
 ```
 

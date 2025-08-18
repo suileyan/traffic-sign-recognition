@@ -2,14 +2,15 @@
 import { Motion } from "motion-v";
 import { ref, onMounted, computed } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { View, Delete } from '@element-plus/icons-vue';
+import { View, Delete, Calendar, Clock, DataAnalysis, Warning } from '@element-plus/icons-vue';
 import { getDetectionRecordsAPI, getSystemStatisticsOverviewAPI, deleteDetectionRecordAPI, getDetectionRecordAPI } from '@/api/hzsystem_traffic/hzsystem_traffic';
 import type { DetectionRecord, SystemStatisticsOverview } from '@/types/apis/hzsystem_traffic_T';
 
 // 详情弹窗相关数据
 const detailDialogVisible = ref(false);
-const currentRecordDetail = ref<any>(null);
-const detailLoading = ref(false);// 统计概览数据
+const currentRecordDetail = ref<DetectionRecord | null>(null);
+const detailLoading = ref(false);
+// 统计概览数据
 const statisticsOverview = ref<SystemStatisticsOverview>();
 
 // 检测历史数据（计算属性）- 基于检测记录详情数据
@@ -207,15 +208,12 @@ const handleDelete = async (row: DetectionRecord) => {
 
     // 调用删除API
     await deleteDetectionRecordAPI(row.id);
-
     // 删除成功后刷新数据
     ElMessage.success('删除成功');
     await fetchDetectionRecords();
   } catch (error) {
-    if (error !== 'cancel') {
-      console.error('删除记录失败:', error);
-      ElMessage.error('删除失败，请重试');
-    }
+    console.error('删除记录失败:', error);
+    ElMessage.error('删除失败，请重试');
   }
 };
 
@@ -595,7 +593,7 @@ const iconVariants = {
             </template>
             <el-scrollbar height="200px">
               <pre class="text-sm text-gray-600 whitespace-pre-wrap">{{ JSON.stringify(currentRecordDetail.detection_data,
-            null, 2) }}</pre>
+                null, 2) }}</pre>
             </el-scrollbar>
           </el-card>
         </div>
