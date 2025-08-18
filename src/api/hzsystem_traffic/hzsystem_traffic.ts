@@ -213,8 +213,8 @@ export function updateDetectionRecordAPI(id: number, data: UpdateDetectionRecord
 export function deleteDetectionRecordAPI(id: number): Promise<ApiResponse> {
   return serviceAxios({
     url: `/api/traffic/records/${id}/`,
-    method: 'delete'
-  })
+    method: "DELETE",
+  });
 }
 
 // ==================== 1.5 检测结果管理 ====================
