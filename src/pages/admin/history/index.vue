@@ -473,6 +473,158 @@ const iconVariants = {
         </div>
       </el-card>
     </Motion>
+
+    <!-- 详情弹窗 -->
+    <el-dialog
+      v-model="detailDialogVisible"
+      title="检测记录详情"
+      width="80%"
+      :close-on-click-modal="false"
+      destroy-on-close
+    >
+      <div v-loading="detailLoading" class="detail-content">
+        <div v-if="currentRecordDetail" class="space-y-6">
+          <!-- 基本信息 -->
+          <el-card class="info-card">
+            <template #header>
+              <span class="text-lg font-medium">基本信息</span>
+            </template>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="info-item">
+                <span class="label">记录ID:</span>
+                <span class="value">{{ currentRecordDetail.id }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">用户:</span>
+                <span class="value">{{ currentRecordDetail.user_name }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">检测类型:</span>
+                <span class="value">{{ currentRecordDetail.detection_type_display }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">检测状态:</span>
+                <el-tag
+                  :type="currentRecordDetail.status_display === 'completed' || currentRecordDetail.status_display === '已完成' ? 'success' : 
+                         currentRecordDetail.status_display === 'processing' ? 'warning' : 
+                         currentRecordDetail.status_display === 'failed' ? 'danger' : 'info'"
+                >
+                  {{ currentRecordDetail.status_display }}
+                </el-tag>
+              </div>
+              <div class="info-item">
+                <span class="label">处理时间:</span>
+                <span class="value">{{ currentRecordDetail.processing_time?.toFixed(2) }}s</span>
+              </div>
+              <div class="info-item">
+                <span class="label">文件大小:</span>
+                <span class="value">{{ currentRecordDetail.file_size_mb?.toFixed(2) }}MB</span>
+              </div>
+              <div class="info-item">
+                <span class="label">创建时间:</span>
+                <span class="value">{{ new Date(currentRecordDetail.created_at).toLocaleString('zh-CN') }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">更新时间:</span>
+                <span class="value">{{ new Date(currentRecordDetail.updated_at).toLocaleString('zh-CN') }}</span>
+              </div>
+            </div>
+          </el-card>
+
+          <!-- 图片信息 -->
+          <el-card class="info-card">
+            <template #header>
+              <span class="text-lg font-medium">图片信息</span>
+            </template>
+            <div class="grid grid-cols-2 gap-6">
+              <div v-if="currentRecordDetail.original_file">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">原始图片</h4>
+                <el-image
+                  :src="getImageUrl(currentRecordDetail.original_file)"
+                  :preview-src-list="[getImageUrl(currentRecordDetail.original_file)]"
+                  fit="cover"
+                  class="w-full h-48 rounded-lg border"
+                  :preview-teleported="true"
+                />
+              </div>
+              <div v-if="currentRecordDetail.result_image">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">检测结果图片</h4>
+                <el-image
+                  :src="getImageUrl(currentRecordDetail.result_image)"
+                  :preview-src-list="[getImageUrl(currentRecordDetail.result_image)]"
+                  fit="cover"
+                  class="w-full h-48 rounded-lg border"
+                  :preview-teleported="true"
+                />
+              </div>
+            </div>
+          </el-card>
+
+          <!-- 检测结果 -->
+          <el-card v-if="currentRecordDetail.detection_results && currentRecordDetail.detection_results.length > 0" class="info-card">
+            <template #header>
+              <span class="text-lg font-medium">检测结果</span>
+            </template>
+            <div class="space-y-4">
+              <div
+                v-for="(result, index) in currentRecordDetail.detection_results"
+                :key="index"
+                class="result-item p-4 border rounded-lg bg-gray-50"
+              >
+                <div class="grid grid-cols-3 gap-4">
+                  <div class="info-item">
+                    <span class="label">交通标志:</span>
+                    <span class="value font-medium">{{ result.traffic_sign_name }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">标志代码:</span>
+                    <span class="value">{{ result.traffic_sign_code }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">置信度:</span>
+                    <span class="value">
+                      <el-tag :type="result.confidence >= 0.8 ? 'success' : result.confidence >= 0.6 ? 'warning' : 'danger'">
+                        {{ result.confidence_percent }}
+                      </el-tag>
+                    </span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">边界框位置:</span>
+                    <span class="value">X: {{ result.bbox_x }}, Y: {{ result.bbox_y }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">边界框大小:</span>
+                    <span class="value">{{ result.bbox_width }} × {{ result.bbox_height }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">是否正确:</span>
+                    <el-tag :type="result.is_correct ? 'success' : 'danger'">
+                      {{ result.is_correct ? '正确' : '错误' }}
+                    </el-tag>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </el-card>
+
+          <!-- 检测数据 -->
+          <el-card v-if="currentRecordDetail.detection_data" class="info-card">
+            <template #header>
+              <span class="text-lg font-medium">原始检测数据</span>
+            </template>
+            <el-scrollbar height="200px">
+              <pre class="text-sm text-gray-600 whitespace-pre-wrap">{{ JSON.stringify(currentRecordDetail.detection_data, null, 2) }}</pre>
+            </el-scrollbar>
+          </el-card>
+        </div>
+      </div>
+      
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="detailDialogVisible = false">关闭</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
